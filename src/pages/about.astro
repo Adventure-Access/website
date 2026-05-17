@@ -1,0 +1,111 @@
+---
+import Base from '../layouts/Base.astro';
+
+const team = [
+  {
+    name: 'Brian',
+    region: '',
+    image: '/images/2023/06/Brian-1024x720.jpg',
+    bio: '',
+  },
+  {
+    name: 'Trevor',
+    region: 'India',
+    image: '/images/2023/06/Trevor-1024x720.jpg',
+    bio: "Hi! My name is Trevor, and I love helping others experience the rich culture of the Indian mountains. I'm an American living in India and married to an Indian, so for years I have been undergoing the slow metamorphosis to a half-desi half-foreigner. I love extended journeys through the small villages of the Himalaya, looking for new trails and hidden villages to experience and share with others. In leading my role with Adventure Access I have the rare privilege of being a cultural bridge; fostering relationships between guests like you and the local village families we love.",
+  },
+  {
+    name: 'Lenduk Lhomi',
+    region: 'Nepal',
+    image: '/images/2023/06/Lenduk-Lhomi-1024x720.jpg',
+    bio: "Tashi Delek! I am Lenduk. Born and raised in Nepal, the mountains are my home. I have been a guide for many years on big and small mountain expeditions. Accomplishments include successfully summiting Mt. Everest, Ama Dablam, Island Peak, Mera Peak, Lobuche, and others. More than a peak bagger, I truly enjoy time with people. I am here to share my home with you!",
+  },
+  {
+    name: 'Stanzin Padma',
+    region: 'India',
+    image: '/images/2025/06/stanzin-bio-1024x720.jpg',
+    bio: "Julley travelers! I am Stanzin Padma, a local guide from Ladakh. I was born here and grew up knowing a peaceful way of life, surrounded by mountains, local culture, and a deep connection to nature. As a female guide, I want to show others that women in Ladakh can lead, inspire, and make a difference.",
+  },
+];
+---
+<Base title="About Adventure Access — A community of guides across the Himalayas" description="With diverse backgrounds from the United States, China, India, Nepal and Bhutan, Adventure Access is a community of guides, operators, and hospitality experts across the Himalayas.">
+  <section class="pt-32 md:pt-40 pb-16">
+    <div class="max-w-4xl mx-auto px-6 md:px-14">
+      <div class="eyebrow mb-6">— About</div>
+      <h1 class="display text-6xl md:text-8xl mb-10">We believe real adventure changes <em class="not-italic font-light text-saffron font-display italic">you</em>.</h1>
+      <div class="font-display text-xl md:text-2xl italic text-ink-soft leading-relaxed space-y-5">
+        <p>We've been trekking, biking, and climbing in Tibet, Nepal, Bhutan, and India for over twenty years — and we want to share our adventure opportunities in this region with you. Bring your friends along or make new friends along the way.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="pb-20">
+    <div class="max-w-4xl mx-auto px-6 md:px-14 text-lg leading-relaxed text-ink-soft space-y-5">
+      <p>Simply stated, we are here to put you on the mountain. The Tibetan Plateau and the broader Himalayan region is an amazing place to experience, but with little infrastructure it can be a maddening region if you don't have connections and resources. That is where we come in. We've been living and working throughout the region for over 20 years.</p>
+      <p>We bring you experiences that are born out of the past, and the true success is our deep relationships with the locals from this region. Trekking, mountain biking, mountaineering, cultural experiences, and tours in the national parks are some of the avenues we use to explore this great region. Come join us!</p>
+    </div>
+  </section>
+
+  <!-- COMMUNITY -->
+  <section class="bg-paper py-24 md:py-32">
+    <div class="max-w-8xl mx-auto px-6 md:px-14">
+      <div class="max-w-3xl mb-16">
+        <div class="eyebrow mb-4">— Our Community</div>
+        <h2 class="display text-5xl md:text-6xl mb-6">A network you can <em class="not-italic font-light text-saffron font-display italic">trust</em>.</h2>
+        <p class="text-lg text-ink-soft leading-relaxed">
+          With diverse backgrounds from the United States, China, India, Nepal and Bhutan,
+          we are able to provide unparalleled experiences that blend the needs of our clients with
+          a local understanding of what it takes to experience the best a place has to offer.
+        </p>
+      </div>
+      <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8 md:gap-10">
+        {team.map(m => (
+          <div>
+            <div class="aspect-[4/5] overflow-hidden bg-paper mb-5">
+              <img src={m.image} alt={m.name} loading="lazy" class="w-full h-full object-cover" />
+            </div>
+            <div class="eyebrow mb-2">{m.region && `— ${m.region}`}</div>
+            <h3 class="font-display text-2xl mb-3">{m.name}</h3>
+            {m.bio && <p class="text-sm text-ink-soft leading-relaxed">{m.bio}</p>}
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- GOAL -->
+  <section id="our-goal" class="py-24 md:py-32">
+    <div class="max-w-8xl mx-auto px-6 md:px-14 grid lg:grid-cols-2 gap-16 lg:gap-24">
+      <div>
+        <div class="eyebrow mb-4">— Our Goal</div>
+        <h2 class="display text-5xl mb-8">Adventure with <em class="not-italic font-light text-saffron font-display italic">care</em>.</h2>
+        <p class="text-lg text-ink-soft leading-relaxed">
+          At Adventure Access, we strive to provide adventurers with the best of outdoor experiences
+          while also enjoying quality cultural interaction. We are committed to developing better life
+          and work opportunities for local nomads and villagers, educating clients and communities
+          about the needs of their surroundings, and leaving a better environment for the future.
+        </p>
+      </div>
+      <div class="space-y-10">
+        <div>
+          <h3 class="font-display text-2xl mb-3">Social Enterprise</h3>
+          <p class="text-ink-soft leading-relaxed">
+            We invest in local entrepreneurs and their employees to build a strong network of adventure
+            providers and hospitality points throughout the region. Rather than just hiring men and women
+            within the region, we work to develop strong local job makers, guides, and employees to boost
+            the local economy and serve you in the best way possible. When you choose Adventure Access as
+            a tour provider you become an investor in the local adventure ecosystem.
+          </p>
+        </div>
+        <div>
+          <h3 class="font-display text-2xl mb-3">Our Commitment</h3>
+          <p class="text-ink-soft leading-relaxed">
+            It is our desire to provide clients with a great experience, but not at the expense of the
+            local community and environment. We are committed to responsible tourism that develops
+            communities, enriches lives, and improves the environment.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+</Base>

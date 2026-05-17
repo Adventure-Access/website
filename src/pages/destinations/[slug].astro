@@ -1,0 +1,117 @@
+---
+import Base from '../../layouts/Base.astro';
+import TourCard from '../../components/TourCard.astro';
+import destinations from '../../data/destinations.json';
+import tours from '../../data/tours.json';
+
+export async function getStaticPaths() {
+  const items = (await import('../../data/destinations.json')).default;
+  return items.map((d: any) => ({ params: { slug: d.slug } }));
+}
+
+const { slug } = Astro.params;
+const dest = destinations.find((d: any) => d.slug === slug);
+if (!dest) throw new Error(`Destination not found: ${slug}`);
+
+// Tour matching is rough — map by region keywords for now
+const regionKeywords: Record<string, string[]> = {
+  ladakh: ['ladakh', 'zanskar'],
+  nepal: ['everest', 'annapurna', 'mustang', 'nepal'],
+  bhutan: ['bhutan'],
+  yunnan: ['lijiang', 'yunnan', 'tiger leaping', 'jade dragon'],
+};
+const kws = regionKeywords[slug as string] || [];
+const relatedTours = tours.filter((t: any) =>
+  kws.some(k => t.title.toLowerCase().includes(k) || t.slug.toLowerCase().includes(k))
+);
+---
+<Base
+  hideNavBg={true}
+  title={`${dest.name} — Adventure Access`}
+  description={dest.blurb}
+  ogImage={dest.hero}
+>
+  <!-- HERO -->
+  <section class="relative min-h-[78vh] flex items-end">
+    <img src={dest.hero} alt={dest.name} class="absolute inset-0 w-full h-full object-cover" />
+    <div class="absolute inset-0 bg-gradient-to-b from-ink/20 via-transparent to-ink/75"></div>
+    <div class="relative max-w-8xl mx-auto w-full px-6 md:px-14 pb-20 md:pb-24 text-cream">
+      <div class="eyebrow mb-5">— {dest.country}</div>
+      <h1 class="display text-6xl md:text-8xl mb-5">{dest.name}</h1>
+      <p class="font-display italic text-2xl md:text-3xl text-cream/90 max-w-xl">{dest.tagline}</p>
+    </div>
+  </section>
+
+  <!-- INTRO -->
+  <section class="py-24 md:py-32">
+    <div class="max-w-4xl mx-auto px-6 md:px-14">
+      <p class="font-display text-3xl md:text-4xl leading-snug text-ink">{dest.intro}</p>
+    </div>
+  </section>
+
+  <!-- SECTIONS (editorial) -->
+  <section class="pb-24 md:pb-32">
+    <div class="max-w-4xl mx-auto px-6 md:px-14 space-y-20">
+      {dest.sections.map((s: any) => (
+        <article>
+          <div class="eyebrow mb-4">— Chapter</div>
+          <h2 class="display text-4xl md:text-5xl mb-6">{s.title}</h2>
+          <div class="text-lg leading-relaxed text-ink-soft space-y-5">
+            {s.body.split('\n\n').map((p: string) => <p>{p}</p>)}
+          </div>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <!-- TOURS IN THIS REGION -->
+  {relatedTours.length > 0 && (
+    <section class="bg-paper py-24 md:py-32">
+      <div class="max-w-8xl mx-auto px-6 md:px-14">
+        <div class="flex flex-wrap justify-between items-end gap-6 mb-12 pb-6 border-b border-ink/15">
+          <h2 class="display text-5xl">Itineraries in {dest.country}</h2>
+          <a href="/transformational-travel" class="btn-ghost">All itineraries →</a>
+        </div>
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {relatedTours.map((t: any) => (
+            <TourCard
+              slug={t.slug}
+              title={t.title}
+              excerpt={t.excerpt || (t.plain_text || '').slice(0, 200)}
+              category={t.categories?.[0]}
+            />
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+
+  <!-- GALLERY -->
+  {dest.gallery && dest.gallery.length > 0 && (
+    <section class="py-24 md:py-32">
+      <div class="max-w-8xl mx-auto px-6 md:px-14">
+        <div class="eyebrow mb-3">— Field Photos</div>
+        <h2 class="display text-4xl md:text-5xl mb-12">From the field.</h2>
+        <div class="grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-5">
+          {dest.gallery.map((src: string, i: number) => (
+            <div class={`overflow-hidden bg-paper ${i % 5 === 0 ? 'md:col-span-2 md:row-span-2 aspect-square' : 'aspect-[4/3]'}`}>
+              <img src={src} alt="" loading="lazy" class="w-full h-full object-cover hover:scale-105 transition-transform duration-700" />
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+
+  <!-- CTA -->
+  <section class="bg-ink text-cream py-24 md:py-32">
+    <div class="max-w-4xl mx-auto px-6 md:px-14 text-center">
+      <div class="eyebrow !text-saffron mb-6">— Ready?</div>
+      <h2 class="display text-5xl md:text-6xl mb-8">Begin a journey<br>in <em class="not-italic font-light text-saffron font-display italic">{dest.country}</em>.</h2>
+      <p class="text-lg text-cream/80 max-w-xl mx-auto mb-10">
+        Tell us what experiences speak to you, and one of our travel specialists will design a journey shaped specifically for your group.
+      </p>
+      <a href="/#contact" class="btn !bg-saffron hover:!bg-saffron-dark">Start a Conversation</a>
+    </div>
+  </section>
+</Base>

@@ -1,0 +1,27 @@
+---
+export interface Props {
+  slug: string;
+  country: string;
+  name: string;
+  blurb: string;
+  hero: string;
+  index?: number;
+}
+const { slug, country, name, blurb, hero, index } = Astro.props;
+const num = index !== undefined ? String(index + 1).padStart(2, '0') : '';
+---
+<a href={`/destinations/${slug}`} class="group block">
+  <div class="aspect-[4/3] overflow-hidden mb-6 bg-paper">
+    <img
+      src={hero}
+      alt={name}
+      loading="lazy"
+      class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+    />
+  </div>
+  <div class="eyebrow mb-3">— {num && `${num} · `}{country}</div>
+  <h3 class="font-display font-medium text-3xl leading-tight tracking-tight mb-3 group-hover:text-saffron-dark transition-colors">
+    {name}
+  </h3>
+  <p class="text-ink-soft text-base leading-relaxed max-w-md">{blurb}</p>
+</a>

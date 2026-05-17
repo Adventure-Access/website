@@ -1,0 +1,78 @@
+---
+import Base from '../../layouts/Base.astro';
+import tours from '../../data/tours.json';
+
+export async function getStaticPaths() {
+  const items = (await import('../../data/tours.json')).default;
+  return items.map((t: any) => ({ params: { slug: t.slug } }));
+}
+
+const { slug } = Astro.params;
+const tour = tours.find((t: any) => t.slug === slug);
+if (!tour) throw new Error(`Tour not found: ${slug}`);
+
+// Pick a reasonable hero image — featured_image if present, else a destination-themed fallback
+const fallback = '/images/2024/05/IMG_5619-1920x900.jpg';
+const heroImage = tour.featured_image || fallback;
+
+const category = tour.categories?.[0] || 'Itinerary';
+---
+<Base
+  hideNavBg={true}
+  title={`${tour.title} — Adventure Access`}
+  description={tour.excerpt || `${tour.title} — a custom adventure with Adventure Access.`}
+  ogImage={heroImage}
+>
+  <!-- HERO -->
+  <section class="relative min-h-[68vh] flex items-end">
+    <img src={heroImage} alt={tour.title} class="absolute inset-0 w-full h-full object-cover" />
+    <div class="absolute inset-0 bg-gradient-to-b from-ink/30 via-transparent to-ink/80"></div>
+    <div class="relative max-w-8xl mx-auto w-full px-6 md:px-14 pb-16 md:pb-24 text-cream">
+      <div class="eyebrow mb-5">— {category}</div>
+      <h1 class="display text-5xl md:text-7xl max-w-4xl">{tour.title}</h1>
+    </div>
+  </section>
+
+  <!-- CONTENT -->
+  <section class="py-24 md:py-32">
+    <div class="max-w-3xl mx-auto px-6 md:px-14">
+      {tour.excerpt && (
+        <p class="font-display italic text-2xl md:text-3xl leading-snug text-ink-soft mb-16">
+          {tour.excerpt}
+        </p>
+      )}
+
+      {tour.sections.map((s: any) => (
+        <article class="mb-14">
+          {s.heading && <h2 class="display text-3xl md:text-4xl mb-6">{s.heading}</h2>}
+          <div class="text-lg leading-relaxed text-ink-soft space-y-5 has-dropcap">
+            {s.body.split('\n\n').filter((p: string) => p.trim()).map((p: string) => (
+              <p>{p}</p>
+            ))}
+          </div>
+        </article>
+      ))}
+
+      {tour.sections.length === 0 && tour.plain_text && (
+        <div class="text-lg leading-relaxed text-ink-soft space-y-5">
+          {tour.plain_text.split('\n\n').filter((p: string) => p.trim()).map((p: string) => (
+            <p>{p}</p>
+          ))}
+        </div>
+      )}
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="bg-paper py-24 md:py-32 border-t border-ink/10">
+    <div class="max-w-4xl mx-auto px-6 md:px-14 text-center">
+      <div class="eyebrow mb-5">— Inquire</div>
+      <h2 class="display text-4xl md:text-5xl mb-6">Customize <em class="not-italic font-light text-saffron font-display italic">this journey</em>.</h2>
+      <p class="text-lg text-ink-soft max-w-xl mx-auto mb-10">
+        Expressing interest is a no-commitment way to start a conversation with our travel specialists.
+        We'll shape the itinerary specifically around your group.
+      </p>
+      <a href="/#contact" class="btn">Start a Conversation</a>
+    </div>
+  </section>
+</Base>

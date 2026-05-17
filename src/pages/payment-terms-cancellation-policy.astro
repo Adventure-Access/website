@@ -1,0 +1,25 @@
+---
+import Base from '../layouts/Base.astro';
+import legal from '../data/legal-pages.json';
+const page = (legal as any)['payment-terms-cancellation-policy'];
+---
+<Base title={`${page.title} — Adventure Access`} description="Reservation, payment, and cancellation terms for Adventure Access tours.">
+  <article class="pt-32 md:pt-40 pb-24 md:pb-32">
+    <div class="max-w-3xl mx-auto px-6 md:px-14">
+      <div class="eyebrow mb-5">— Legal</div>
+      <h1 class="display text-5xl md:text-6xl mb-12">{page.title}</h1>
+      <div class="prose-content text-lg leading-relaxed text-ink-soft" set:html={page.html}></div>
+    </div>
+  </article>
+</Base>
+
+<style is:global>
+  .prose-content p { margin-bottom: 1.25rem; }
+  .prose-content strong { color: #2b3540; font-weight: 600; font-family: 'Fraunces', serif; font-size: 1.25rem; display: inline-block; margin-top: 1.5rem; }
+  .prose-content a { color: #d97a2c; text-decoration: underline; }
+  .prose-content ul, .prose-content ol { padding-left: 1.5rem; margin-bottom: 1.25rem; }
+  .prose-content li { margin-bottom: 0.5rem; }
+  .prose-content h2, .prose-content h3 { font-family: 'Fraunces', serif; color: #2b3540; margin-top: 2rem; margin-bottom: 1rem; }
+  .prose-content table { width: 100%; margin: 1.5rem 0; border-collapse: collapse; }
+  .prose-content th, .prose-content td { border-bottom: 1px solid #e5dfd0; padding: 0.75rem 0.5rem; text-align: left; }
+</style>

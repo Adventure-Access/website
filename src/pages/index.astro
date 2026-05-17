@@ -1,0 +1,127 @@
+---
+import Base from '../layouts/Base.astro';
+import DestinationCard from '../components/DestinationCard.astro';
+import HeroVideo from '../components/HeroVideo.astro';
+import destinations from '../data/destinations.json';
+
+// Matches the current Adventure Access homepage hero video.
+const heroVideoId = 'Zu4MHCoXOGg';
+const heroPoster  = '/images/2024/05/Ladakh-hero-image.jpg';
+---
+<Base hideNavBg={true} title="Adventure Access — Real Adventure Changes You" description="Custom adventure tours through the Himalayas and the Tibetan Plateau. Bhutan, India, Nepal, and Yunnan.">
+
+  <!-- HERO -->
+  <section class="relative min-h-[88vh] flex items-end overflow-hidden">
+    <HeroVideo videoId={heroVideoId} poster={heroPoster} posterAlt="Adventure Access hero" />
+    <div class="absolute inset-0 bg-gradient-to-b from-ink/10 via-transparent to-ink/75 z-[3]"></div>
+    <div class="relative z-[4] max-w-8xl mx-auto w-full px-6 md:px-14 pb-20 md:pb-28 text-cream">
+      <div class="max-w-3xl">
+        <div class="eyebrow mb-6 fade-up">— Himalayas · Tibetan Plateau</div>
+        <h1 class="display text-6xl md:text-8xl mb-6 fade-up-delay-1">
+          Real adventure<br><em class="not-italic font-light text-saffron font-display italic">changes</em> you.
+        </h1>
+        <p class="text-lg md:text-xl text-cream/90 max-w-xl leading-relaxed fade-up-delay-2">
+          Once you get to know the people of the Tibetan Plateau and the broader Himalayan region,
+          you'll never be the same. Their perspectives sharpen your vision. The challenges of their
+          environment invigorate you.
+        </p>
+      </div>
+    </div>
+    {/* Scroll cue — matches the Bhutan proposal pattern */}
+    <div class="absolute bottom-6 left-1/2 -translate-x-1/2 z-[4] hidden md:flex flex-col items-center text-cream/70 fade-up-delay-2 pointer-events-none">
+      <span class="eyebrow !text-cream/70 mb-3">Scroll</span>
+      <span class="block w-px h-10 bg-cream/40"></span>
+    </div>
+  </section>
+
+  <!-- INTRO -->
+  <section class="py-28 md:py-40">
+    <div class="max-w-8xl mx-auto px-6 md:px-14 grid lg:grid-cols-[1fr_1.4fr] gap-16 lg:gap-28 items-center">
+      <div>
+        <div class="eyebrow mb-6">— Our Approach</div>
+        <h2 class="display text-5xl md:text-6xl">Travel with a focus on <em class="not-italic font-light text-saffron font-display italic">transformation</em>.</h2>
+      </div>
+      <div class="text-lg leading-relaxed text-ink-soft space-y-5">
+        <p>Towering peaks, deep valleys, and a rich culture appeal to the adventurous. But what else does it mean to experience the Himalayas and the Tibetan Plateau?</p>
+        <p>Tibetan communities are culturally rich and extremely hospitable. The places we call home have beckoned adventurous hearts for hundreds of years. Whether you are looking to challenge your physical limits, expound upon your intellectual curiosity, or divulge in local culture and food, each adventurer has a starting point. But having an end in focus is an important part of a well-planned trip.</p>
+        <p>With the right local guidance, you will leave as a transformed traveler.</p>
+        <p><a href="/transformational-travel" class="btn-ghost">Read more on transformation →</a></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- DESTINATIONS -->
+  <section class="pb-28 md:pb-40">
+    <div class="max-w-8xl mx-auto px-6 md:px-14">
+      <div class="flex flex-wrap justify-between items-end gap-6 mb-14 pb-8 border-b border-ink/15">
+        <h2 class="display text-5xl md:text-6xl">Where adventure<br>meets <em class="not-italic font-light text-saffron font-display italic">local</em>.</h2>
+        <a href="/transformational-travel" class="btn-ghost">View all destinations →</a>
+      </div>
+      <div class="grid md:grid-cols-2 gap-10 md:gap-12">
+        {destinations.map((d, i) => (
+          <DestinationCard
+            slug={d.slug}
+            country={d.country}
+            name={d.name}
+            blurb={d.blurb}
+            hero={d.hero}
+            index={i}
+          />
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- YOUR ADVENTURE IS OUR LOCAL -->
+  <section class="bg-paper py-28 md:py-36">
+    <div class="max-w-8xl mx-auto px-6 md:px-14 grid lg:grid-cols-[1fr_1.2fr] gap-16 lg:gap-24 items-center">
+      <img src="/images/2023/06/About-Us-General-2-scaled.jpg" alt="" class="w-full aspect-[4/5] object-cover" loading="lazy" />
+      <div>
+        <div class="eyebrow mb-6">— Our Local</div>
+        <h2 class="display text-5xl md:text-6xl mb-8">Your adventure is <em class="not-italic font-light text-saffron font-display italic">our local</em>.</h2>
+        <div class="text-lg leading-relaxed text-ink-soft space-y-5">
+          <p>Our founders embraced Tibet decades ago. Our family of operators, guides, and hospitality experts has spread throughout Bhutan, China, India and Nepal. Our mix of American roots and local families creates a rare bridge — one that gives you unrivaled access to the true Himalayan experience.</p>
+          <p>Our team at Adventure Access is eager to help you discover the breath-taking scenery and unique peoples across the region. We look forward to meeting you, and we're excited for you to discover how your experience will transform, enlighten and inspire.</p>
+        </div>
+        <a href="/about" class="btn mt-10">Meet the Team</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- TESTIMONIAL -->
+  <section class="bg-ink text-cream py-28 md:py-32">
+    <div class="max-w-5xl mx-auto px-6 md:px-14 text-center">
+      <blockquote class="font-display font-light italic text-3xl md:text-5xl leading-tight tracking-tight mb-8">
+        "Your programs have a unique design and foster a personal worldview that is clearly impactful, life changing. Thanks for your special adventure approach which connects people, so needed in our time."
+      </blockquote>
+      <cite class="eyebrow not-italic">— Oscar · Asheville, North Carolina</cite>
+    </div>
+  </section>
+
+  <!-- FEATURED ARTICLE -->
+  <section class="py-28 md:py-36">
+    <div class="max-w-8xl mx-auto px-6 md:px-14">
+      <div class="grid lg:grid-cols-2 gap-16 lg:gap-24 items-center">
+        <a href="/blog/hidden-mountain-bike-routes-in-ladakh" class="group block aspect-[4/3] overflow-hidden bg-paper">
+          <img
+            src="/images/2025/11/MTB-Exploration-Photo-3-480x350.jpeg"
+            alt=""
+            loading="lazy"
+            class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+          />
+        </a>
+        <div>
+          <div class="eyebrow mb-5">— From the Journal</div>
+          <h2 class="display text-4xl md:text-5xl mb-5">Ride the Himalayas: exploring Zanskar's hidden mountain bike routes in Ladakh.</h2>
+          <p class="text-lg leading-relaxed text-ink-soft mb-8">
+            The air thins as you and your bike approach the crest of Kyupa La. At 4,400 meters,
+            every breath feels earned. Ahead, the trail beneath you unravels like a ribbon across
+            scree slopes and ridgelines, plunging toward a valley where…
+          </p>
+          <a href="/blog/hidden-mountain-bike-routes-in-ladakh" class="btn-ghost">Read the article →</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</Base>

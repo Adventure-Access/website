@@ -1,0 +1,88 @@
+---
+export interface Props {
+  /** YouTube video ID. The current Adventure Access site uses Zu4MHCoXOGg. */
+  videoId: string;
+  /** Poster image shown while the video loads, and as a fallback. */
+  poster: string;
+  /** Optional alt text for the poster image. */
+  posterAlt?: string;
+  /** Aspect ratio of the source video — defaults to 16:9. */
+  ratio?: '16/9' | '21/9' | '4/3';
+}
+const { videoId, poster, posterAlt = '', ratio = '16/9' } = Astro.props;
+
+// Loop trick: YouTube requires playlist=VIDEO_ID to loop a single video.
+const params = new URLSearchParams({
+  autoplay: '1',
+  mute: '1',
+  loop: '1',
+  playlist: videoId,
+  controls: '0',
+  showinfo: '0',
+  modestbranding: '1',
+  iv_load_policy: '3',
+  rel: '0',
+  playsinline: '1',
+  enablejsapi: '1',
+});
+const embedSrc = `https://www.youtube-nocookie.com/embed/${videoId}?${params.toString()}`;
+---
+<div class="hero-video">
+  <!-- Poster underneath: shows immediately, fades behind the iframe -->
+  <img src={poster} alt={posterAlt} class="hero-video__poster kenburns" loading="eager" />
+  <div class="hero-video__wrap" data-ratio={ratio}>
+    <iframe
+      src={embedSrc}
+      title="Adventure Access background video"
+      frameborder="0"
+      allow="autoplay; encrypted-media"
+      allowfullscreen
+      loading="lazy"
+      class="hero-video__iframe"
+    ></iframe>
+  </div>
+</div>
+
+<style>
+  .hero-video {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    pointer-events: none;
+    background: #0f1218;
+  }
+  .hero-video__poster {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 1;
+  }
+  .hero-video__wrap {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    /* Make video larger than viewport so 16:9 fills both axes */
+    width: 177.78vh;
+    min-width: 100%;
+    height: 56.25vw;
+    min-height: 100%;
+    z-index: 2;
+  }
+  .hero-video__iframe {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+  }
+  /* On phones, mobile YouTube usually blocks autoplay anyway — fall back to the poster */
+  @media (max-width: 640px) {
+    .hero-video__wrap { display: none; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .hero-video__wrap { display: none; }
+  }
+</style>

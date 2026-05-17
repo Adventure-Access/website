@@ -1,0 +1,58 @@
+---
+import Base from '../../layouts/Base.astro';
+
+// Placeholder dynamic route for blog posts. Once the WP "post" export is provided,
+// this can be wired to a posts.json file with full article HTML.
+
+const knownSlugs = [
+  'hidden-mountain-bike-routes-in-ladakh',
+  'adventure-access-climate-action-partnership-with-tomorrows-air',
+  'boudhanath-stupa-kathmandu',
+  'true-bhutanese-immersion-through-a-hot-stone-bath',
+  'unesco-world-heritage-sites',
+  'mountain-gods-tibet',
+  'sherpa-ethnic-heritage-not-profession',
+  'whats-the-key-to-real-adventure',
+  'traveling-the-world-of-travertine',
+  'introducing-lijiang-yunnan-a-new-carefully-crafted-tour-to-an-ancient-destination',
+  'where-do-we-go-now',
+  'how-adventurous-do-i-need-to-be-for-the-tibetan-plateau',
+];
+
+export async function getStaticPaths() {
+  const slugs = [
+    'hidden-mountain-bike-routes-in-ladakh','adventure-access-climate-action-partnership-with-tomorrows-air',
+    'boudhanath-stupa-kathmandu','true-bhutanese-immersion-through-a-hot-stone-bath',
+    'unesco-world-heritage-sites','mountain-gods-tibet','sherpa-ethnic-heritage-not-profession',
+    'whats-the-key-to-real-adventure','traveling-the-world-of-travertine',
+    'introducing-lijiang-yunnan-a-new-carefully-crafted-tour-to-an-ancient-destination',
+    'where-do-we-go-now','how-adventurous-do-i-need-to-be-for-the-tibetan-plateau',
+  ];
+  return slugs.map(slug => ({ params: { slug } }));
+}
+
+const { slug } = Astro.params;
+const liveUrl = `https://adventure-access.com/${slug}/`;
+const title = (slug as string).replace(/-/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
+---
+<Base title={`${title} — Adventure Access Journal`} description={`Read ${title} on the Adventure Access journal.`}>
+  <section class="pt-32 md:pt-40 pb-20 md:pb-32">
+    <div class="max-w-3xl mx-auto px-6 md:px-14">
+      <div class="eyebrow mb-5">— The Journal</div>
+      <h1 class="display text-5xl md:text-6xl mb-10">{title}</h1>
+
+      <div class="bg-paper border-l-4 border-saffron px-8 py-6 mb-12">
+        <p class="text-sm text-ink-soft leading-relaxed">
+          <strong class="text-ink">Content placeholder.</strong>
+          This article will be filled in automatically once the WordPress "Posts" export is provided.
+          In the meantime, you can read the live version at:
+        </p>
+        <p class="mt-3">
+          <a href={liveUrl} target="_blank" rel="noopener" class="text-saffron-dark underline break-all">{liveUrl}</a>
+        </p>
+      </div>
+
+      <a href="/blog" class="btn-ghost">← Back to the Journal</a>
+    </div>
+  </section>
+</Base>

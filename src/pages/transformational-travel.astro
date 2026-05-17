@@ -1,0 +1,85 @@
+---
+import Base from '../layouts/Base.astro';
+import DestinationCard from '../components/DestinationCard.astro';
+import TourCard from '../components/TourCard.astro';
+import destinations from '../data/destinations.json';
+import tours from '../data/tours.json';
+
+// Group tours by category
+const byCategory: Record<string, any[]> = {};
+for (const t of tours as any[]) {
+  const c = (t.categories?.[0] || 'Itineraries').replace(' in Eastern Tibet', '');
+  if (!byCategory[c]) byCategory[c] = [];
+  byCategory[c].push(t);
+}
+const categoryOrder = ['Trekking and Hiking', 'Mountain Biking', 'Cultural Experiences', 'Family Trips', 'Uncategorized'];
+const sortedCategories = Object.keys(byCategory).sort((a, b) => {
+  const ai = categoryOrder.indexOf(a);
+  const bi = categoryOrder.indexOf(b);
+  return (ai === -1 ? 99 : ai) - (bi === -1 ? 99 : bi);
+});
+---
+<Base
+  title="Transformational Travel — Adventure Access"
+  description="Traveling with Adventure Access combines cultural elements of regional farming and nomadic communities with important monastic centers and immersive adventure."
+>
+  <section class="pt-32 md:pt-40 pb-12 md:pb-16">
+    <div class="max-w-8xl mx-auto px-6 md:px-14 max-w-4xl">
+      <div class="eyebrow mb-6">— Transformational Travel</div>
+      <h1 class="display text-6xl md:text-8xl mb-8">Where adventure<br>meets local.</h1>
+      <p class="font-display text-2xl md:text-3xl text-ink-soft leading-snug italic">
+        Towering peaks, deep valleys, and a rich culture appeal to the adventurous.
+        What else does it mean to experience the Roof of the World?
+      </p>
+    </div>
+  </section>
+
+  <section class="py-12 md:py-20">
+    <div class="max-w-8xl mx-auto px-6 md:px-14 grid lg:grid-cols-2 gap-12 lg:gap-20">
+      <div class="text-lg leading-relaxed text-ink-soft space-y-5">
+        <p>Traveling with Adventure Access combines the best cultural elements of regional farming and nomadic communities with important monastic centers and a growing number of opportunities to experience trails for hiking and biking as well as some of the region's most notable National Parks.</p>
+        <p>Our travel specialists and guides weave all of these rich experiences into a single narrative where the traveler can become part of the local story and experience exhilarating adventure combined with deep local encounters. Our experienced guides know how and where to combine these elements to give the traveler a seamless approach to some of the most incredible parts of the Tibetan Plateau and greater Himalayan region.</p>
+      </div>
+      <div class="grid grid-cols-2 gap-3">
+        <img src="/images/2018/08/P42417711.jpg" alt="" class="aspect-[3/4] object-cover" loading="lazy" />
+        <img src="/images/2018/08/DSC_51702.jpg" alt="" class="aspect-[3/4] object-cover mt-12" loading="lazy" />
+      </div>
+    </div>
+  </section>
+
+  <section class="py-20 md:py-28">
+    <div class="max-w-8xl mx-auto px-6 md:px-14">
+      <div class="mb-14 pb-8 border-b border-ink/15">
+        <div class="eyebrow mb-4">— Four Destinations</div>
+        <h2 class="display text-5xl md:text-6xl">Travel through vast mountainous regions.</h2>
+        <p class="text-lg text-ink-soft mt-6 max-w-2xl">
+          Hike, bike, paddle, visit National Parks, or slow down by adding a night at a local homestay.
+          Visit monasteries, experience local customs and food.
+        </p>
+      </div>
+      <div class="grid md:grid-cols-2 gap-10 md:gap-14">
+        {destinations.map((d, i) => (
+          <DestinationCard slug={d.slug} country={d.country} name={d.name} blurb={d.blurb} hero={d.hero} index={i} />
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- TOURS GROUPED -->
+  <section class="bg-paper py-24 md:py-32">
+    <div class="max-w-8xl mx-auto px-6 md:px-14">
+      <div class="eyebrow mb-4">— Itineraries</div>
+      <h2 class="display text-5xl md:text-6xl mb-16">Every journey we've shaped.</h2>
+      {sortedCategories.map(cat => (
+        <div class="mb-20">
+          <h3 class="display text-3xl md:text-4xl mb-8 pb-4 border-b border-ink/15">{cat}</h3>
+          <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {byCategory[cat].map((t: any) => (
+              <TourCard slug={t.slug} title={t.title} excerpt={t.excerpt || (t.plain_text || '').slice(0, 180)} category={cat} />
+            ))}
+          </div>
+        </div>
+      ))}
+    </div>
+  </section>
+</Base>

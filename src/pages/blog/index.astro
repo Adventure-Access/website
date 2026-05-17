@@ -1,0 +1,66 @@
+---
+import Base from '../../layouts/Base.astro';
+
+// Blog posts from the public site, captured before WP-export gap is filled.
+// When you re-export Posts, this list will be replaced with the real content.
+const posts = [
+  { slug: 'hidden-mountain-bike-routes-in-ladakh', title: "Ride the Himalayas: exploring Zanskar's hidden mountain bike routes in Ladakh", image: '/images/2025/11/MTB-Exploration-Photo-3-480x350.jpeg', excerpt: "The air thins as you and your bike approach the crest of Kyupa La. At 4,400 meters, every breath feels earned. Ahead, the trail beneath you unravels like a ribbon across scree slopes and ridgelines, plunging toward a valley where…" },
+  { slug: 'adventure-access-climate-action-partnership-with-tomorrows-air', title: "Adventure Access Climate Action Partnership with Tomorrow's Air", image: '/images/2024/12/tomorrows-blog-header-1600px-480x350.jpg', excerpt: "Inspired by nature and in recognition of travel's opportunity to help when it comes to our climate, Adventure Access is joining Tomorrow's Air, supporting climate action education and accelerating the development of carbon removal with permanent storage." },
+  { slug: 'boudhanath-stupa-kathmandu', title: 'Boudhanath Stupa, Kathmandu', image: '/images/2024/04/Boudhanath-Hero-Image-1920-480x350.jpg', excerpt: 'Nestled in the midst of the dizzying streets of Kathmandu is the most well-known stupa in the city. Each day, multitudes of people encircle the shrine in hopes of having their wishes fulfilled or to gain power from spiritual…' },
+  { slug: 'true-bhutanese-immersion-through-a-hot-stone-bath', title: 'True Bhutanese Immersion through a Hot Stone Bath', image: '/images/2024/03/hot-stone-bath-large-480x350.jpg', excerpt: 'Somehow my first experience in Bhutan did not include a hot stone bath. That was a huge mistake. Why no one encouraged me to visit an old Bhutanese homestead and experience a hot stone bath is a mystery…' },
+  { slug: 'unesco-world-heritage-sites', title: 'What makes a UNESCO World Heritage Site', image: '/images/2021/08/jiuzhaigou-hero-image-480x350.jpg', excerpt: "With China's long history, rich culture, and environmental regions as amazing as the Tibetan Plateau, it is no wonder that there are 56 sites in China listed on the World Heritage List…" },
+  { slug: 'mountain-gods-tibet', title: 'Mountains and Gods: Why the Tallest Mountains are Revered in Tibet', image: '/images/2021/04/thangkha-adventure-access-480x350.jpg', excerpt: "If you've ever seen a documentary about climbing Mount Everest, you've probably seen Sherpas leading expeditions to make offerings around a monument of stones and prayer flags near basecamp as they set off to climb…" },
+  { slug: 'sherpa-ethnic-heritage-not-profession', title: 'To Be Sherpa is an Ethnic Heritage, Not a Profession', image: '/images/2021/04/trekkers-adventure-access-480x350.jpg', excerpt: 'The Sherpa are one of many ethnic Tibetan groups found throughout the Himalayas. Many Sherpas live in Nepal but they can also be found in China and India…' },
+  { slug: 'whats-the-key-to-real-adventure', title: "What's the Key to Real Adventure?", image: '/images/2020/09/Hiking-in-Lijiang-480x350.jpg', excerpt: 'One of our own, Doris, recently traveled to Lijiang. This is a destination she has been before and by her own admission, it had very little impact on her. Here is an article she wrote about her recent experience…' },
+  { slug: 'traveling-the-world-of-travertine', title: 'Traveling the World of Travertine', image: '/images/2020/09/Hero-Image-480x350.jpg', excerpt: "UNESCO travertine formations are few and far between. We've explored and guided in and around Songpan for a long time now. One of our favorite characteristics of the Songpan region is the vast collection of travertine and karst formations…" },
+  { slug: 'introducing-lijiang-yunnan-a-new-carefully-crafted-tour-to-an-ancient-destination', title: 'Introducing Lijiang, Yunnan — a new, carefully crafted tour', image: '/images/2020/09/IMG_4363-480x350.jpg', excerpt: 'Lijiang, a city at the foot of the Jade Dragon Snow Mountain, is famous for its nature, culture and history. It is also the location of our newest, carefully crafted series of tours…' },
+  { slug: 'where-do-we-go-now', title: 'Where do we go now?', image: '/images/2020/05/Hero-image-480x350.jpg', excerpt: "It's a big world out there. Where do you even begin as you consider stepping out of your door? Start by determining your key motivations. Not everyone travels for the same reason and different kinds of travel achieve different goals…" },
+  { slug: 'how-adventurous-do-i-need-to-be-for-the-tibetan-plateau', title: 'How Adventurous Do I Need to be for The Tibetan Plateau?', image: '/images/2020/02/Adventure-Access-7-480x350.jpg', excerpt: 'The Tibetan Plateau, though known as the Roof of the World, can be enjoyed by people of all ages, abilities, and skill levels. You don’t have to join an expedition to the summit of Everest to experience the plateau…' },
+];
+const [featured, ...rest] = posts;
+---
+<Base title="Journal — Adventure Access" description="Stories from the Himalayas and the Tibetan Plateau. Field notes, cultural reflections, and trip reports from our team and guides.">
+  <section class="pt-32 md:pt-40 pb-12">
+    <div class="max-w-4xl mx-auto px-6 md:px-14">
+      <div class="eyebrow mb-6">— The Journal</div>
+      <h1 class="display text-6xl md:text-8xl mb-6">Field notes from<br>the Roof of the World.</h1>
+      <p class="font-display italic text-xl md:text-2xl text-ink-soft leading-relaxed">
+        Trip reports, cultural reflections, and stories from our team across Bhutan, India, Nepal, and Yunnan.
+      </p>
+    </div>
+  </section>
+
+  <!-- Featured -->
+  <section class="py-12 md:py-16 border-t border-ink/15">
+    <div class="max-w-8xl mx-auto px-6 md:px-14">
+      <a href={`/blog/${featured.slug}`} class="group grid lg:grid-cols-[1.2fr_1fr] gap-12 lg:gap-20 items-center">
+        <div class="aspect-[4/3] overflow-hidden bg-paper order-2 lg:order-1">
+          <img src={featured.image} alt="" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
+        </div>
+        <div class="order-1 lg:order-2">
+          <div class="eyebrow mb-4">— Latest</div>
+          <h2 class="display text-4xl md:text-5xl mb-6 group-hover:text-saffron-dark transition-colors">{featured.title}</h2>
+          <p class="text-lg text-ink-soft leading-relaxed mb-6">{featured.excerpt}</p>
+          <span class="btn-ghost">Read the article →</span>
+        </div>
+      </a>
+    </div>
+  </section>
+
+  <!-- Grid -->
+  <section class="py-16 md:py-24 border-t border-ink/15">
+    <div class="max-w-8xl mx-auto px-6 md:px-14">
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-x-10 gap-y-16">
+        {rest.map(p => (
+          <a href={`/blog/${p.slug}`} class="group block">
+            <div class="aspect-[4/3] overflow-hidden bg-paper mb-5">
+              <img src={p.image} alt="" loading="lazy" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
+            </div>
+            <h3 class="font-display text-2xl leading-tight mb-3 group-hover:text-saffron-dark transition-colors">{p.title}</h3>
+            <p class="text-sm text-ink-soft leading-relaxed line-clamp-3">{p.excerpt}</p>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+</Base>
