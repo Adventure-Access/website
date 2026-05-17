@@ -1,58 +1,123 @@
 ---
 import Base from '../../layouts/Base.astro';
-
-// Placeholder dynamic route for blog posts. Once the WP "post" export is provided,
-// this can be wired to a posts.json file with full article HTML.
-
-const knownSlugs = [
-  'hidden-mountain-bike-routes-in-ladakh',
-  'adventure-access-climate-action-partnership-with-tomorrows-air',
-  'boudhanath-stupa-kathmandu',
-  'true-bhutanese-immersion-through-a-hot-stone-bath',
-  'unesco-world-heritage-sites',
-  'mountain-gods-tibet',
-  'sherpa-ethnic-heritage-not-profession',
-  'whats-the-key-to-real-adventure',
-  'traveling-the-world-of-travertine',
-  'introducing-lijiang-yunnan-a-new-carefully-crafted-tour-to-an-ancient-destination',
-  'where-do-we-go-now',
-  'how-adventurous-do-i-need-to-be-for-the-tibetan-plateau',
-];
+import posts from '../../data/blog-posts.json';
 
 export async function getStaticPaths() {
-  const slugs = [
-    'hidden-mountain-bike-routes-in-ladakh','adventure-access-climate-action-partnership-with-tomorrows-air',
-    'boudhanath-stupa-kathmandu','true-bhutanese-immersion-through-a-hot-stone-bath',
-    'unesco-world-heritage-sites','mountain-gods-tibet','sherpa-ethnic-heritage-not-profession',
-    'whats-the-key-to-real-adventure','traveling-the-world-of-travertine',
-    'introducing-lijiang-yunnan-a-new-carefully-crafted-tour-to-an-ancient-destination',
-    'where-do-we-go-now','how-adventurous-do-i-need-to-be-for-the-tibetan-plateau',
-  ];
-  return slugs.map(slug => ({ params: { slug } }));
+  const data = (await import('../../data/blog-posts.json')).default as Array<any>;
+  return data.map((p) => ({ params: { slug: p.slug } }));
 }
 
 const { slug } = Astro.params;
-const liveUrl = `https://adventure-access.com/${slug}/`;
-const title = (slug as string).replace(/-/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
+const all = posts as Array<any>;
+const idx = all.findIndex(p => p.slug === slug);
+if (idx === -1) throw new Error(`Post not found: ${slug}`);
+const post = all[idx];
+const newer = idx > 0 ? all[idx - 1] : null;
+const older = idx < all.length - 1 ? all[idx + 1] : null;
+
+function formatDate(iso: string) {
+  if (!iso) return '';
+  const d = new Date(iso.replace(' ', 'T') + 'Z');
+  return d.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+}
 ---
-<Base title={`${title} — Adventure Access Journal`} description={`Read ${title} on the Adventure Access journal.`}>
-  <section class="pt-32 md:pt-40 pb-20 md:pb-32">
-    <div class="max-w-3xl mx-auto px-6 md:px-14">
-      <div class="eyebrow mb-5">— The Journal</div>
-      <h1 class="display text-5xl md:text-6xl mb-10">{title}</h1>
-
-      <div class="bg-paper border-l-4 border-saffron px-8 py-6 mb-12">
-        <p class="text-sm text-ink-soft leading-relaxed">
-          <strong class="text-ink">Content placeholder.</strong>
-          This article will be filled in automatically once the WordPress "Posts" export is provided.
-          In the meantime, you can read the live version at:
-        </p>
-        <p class="mt-3">
-          <a href={liveUrl} target="_blank" rel="noopener" class="text-saffron-dark underline break-all">{liveUrl}</a>
-        </p>
+<Base
+  title={`${post.title} — Adventure Access Journal`}
+  description={post.excerpt || `Read ${post.title} on the Adventure Access journal.`}
+  ogImage={post.featured_image || undefined}
+>
+  {post.featured_image && (
+    <section class="relative h-[55vh] md:h-[65vh] flex items-end overflow-hidden">
+      <img src={post.featured_image} alt={post.title} class="absolute inset-0 w-full h-full object-cover" />
+      <div class="absolute inset-0 bg-gradient-to-b from-ink/15 via-transparent to-ink/80"></div>
+      <div class="relative max-w-4xl mx-auto w-full px-6 md:px-14 pb-12 md:pb-20 text-cream">
+        <div class="eyebrow !text-cream/80 mb-4">— The Journal · {formatDate(post.date)}</div>
+        <h1 class="display text-4xl md:text-6xl leading-tight max-w-3xl">{post.title}</h1>
       </div>
+    </section>
+  )}
 
-      <a href="/blog" class="btn-ghost">← Back to the Journal</a>
+  {!post.featured_image && (
+    <section class="pt-32 md:pt-40 pb-8">
+      <div class="max-w-3xl mx-auto px-6 md:px-14">
+        <div class="eyebrow mb-5">— The Journal · {formatDate(post.date)}</div>
+        <h1 class="display text-5xl md:text-6xl">{post.title}</h1>
+      </div>
+    </section>
+  )}
+
+  <article class="py-16 md:py-24">
+    <div class="max-w-3xl mx-auto px-6 md:px-14">
+      <div class="prose-post text-lg leading-relaxed text-ink-soft" set:html={post.body_html}></div>
     </div>
+  </article>
+
+  <nav class="border-t border-ink/15 py-12 md:py-16">
+    <div class="max-w-4xl mx-auto px-6 md:px-14 grid md:grid-cols-2 gap-10">
+      {newer ? (
+        <a href={`/blog/${newer.slug}`} class="group block">
+          <div class="eyebrow mb-2">← Newer</div>
+          <div class="font-display text-xl md:text-2xl group-hover:text-saffron-dark transition-colors">{newer.title}</div>
+        </a>
+      ) : <div></div>}
+      {older ? (
+        <a href={`/blog/${older.slug}`} class="group block md:text-right">
+          <div class="eyebrow mb-2">Older →</div>
+          <div class="font-display text-xl md:text-2xl group-hover:text-saffron-dark transition-colors">{older.title}</div>
+        </a>
+      ) : <div></div>}
+    </div>
+  </nav>
+
+  <section class="bg-paper py-16 text-center">
+    <a href="/blog" class="btn-ghost">← Back to the Journal</a>
   </section>
 </Base>
+
+<style is:global>
+  .prose-post p { margin-bottom: 1.4rem; }
+  .prose-post h2, .prose-post h3, .prose-post h4 {
+    font-family: 'Fraunces', serif; color: #2b3540;
+    margin-top: 2.5rem; margin-bottom: 1rem;
+    line-height: 1.1;
+  }
+  .prose-post h2 { font-size: 2rem; }
+  .prose-post h3 { font-size: 1.6rem; }
+  .prose-post h4 { font-size: 1.3rem; }
+  .prose-post strong { color: #2b3540; font-weight: 600; }
+  .prose-post em { font-style: italic; }
+  .prose-post a { color: #d97a2c; text-decoration: underline; text-underline-offset: 3px; }
+  .prose-post a:hover { color: #b85e1a; }
+  .prose-post ul, .prose-post ol { padding-left: 1.5rem; margin-bottom: 1.4rem; }
+  .prose-post li { margin-bottom: 0.5rem; }
+  .prose-post blockquote {
+    border-left: 3px solid #d97a2c;
+    padding-left: 1.5rem;
+    margin: 2rem 0;
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: 1.25rem;
+    color: #2b3540;
+  }
+  .prose-post img {
+    width: 100%;
+    height: auto;
+    margin: 2rem 0;
+    display: block;
+  }
+  .prose-post .aligncenter { margin-left: auto; margin-right: auto; }
+  .prose-post .alignleft  { float: left;  margin-right: 1.5rem; margin-bottom: 1rem; }
+  .prose-post .alignright { float: right; margin-left: 1.5rem;  margin-bottom: 1rem; }
+  .prose-post figure { margin: 2rem 0; }
+  .prose-post figure img { margin: 0; }
+  .prose-post figcaption {
+    font-size: 0.875rem;
+    color: #5a6470;
+    text-align: center;
+    margin-top: 0.5rem;
+    font-style: italic;
+  }
+  .prose-post table { width: 100%; margin: 1.5rem 0; border-collapse: collapse; }
+  .prose-post th, .prose-post td { border-bottom: 1px solid #e5dfd0; padding: 0.75rem 0.5rem; text-align: left; }
+  .prose-post iframe { width: 100%; aspect-ratio: 16/9; margin: 2rem 0; border: 0; }
+</style>
