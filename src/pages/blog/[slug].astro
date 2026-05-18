@@ -20,11 +20,46 @@ function formatDate(iso: string) {
   const d = new Date(iso.replace(' ', 'T') + 'Z');
   return d.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
 }
+
+// Fallback excerpt from body text when WP didn't give us one
+function fallbackExcerpt(html: string, max = 200): string {
+  if (!html) return '';
+  const stripped = html.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim();
+  if (stripped.length <= max) return stripped;
+  return stripped.slice(0, max).replace(/\s+\S*$/, '') + '…';
+}
+const effectiveExcerpt = post.excerpt || fallbackExcerpt(post.body_html);
+
+// Add loading="lazy" to body images that don't already have it
+const bodyHtml = (post.body_html || '').replace(
+  /<img(?![^>]*loading=)([^>]*)>/g,
+  '<img loading="lazy"$1>'
+);
+
+// Article JSON-LD
+const articleSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: post.title,
+  datePublished: post.date,
+  dateModified: post.date,
+  description: effectiveExcerpt,
+  image: post.featured_image ? new URL(post.featured_image, Astro.site).toString() : undefined,
+  url: new URL(`/blog/${post.slug}/`, Astro.site).toString(),
+  author: { '@type': 'Organization', name: 'Adventure Access' },
+  publisher: {
+    '@type': 'Organization',
+    name: 'Adventure Access',
+    logo: { '@type': 'ImageObject', url: new URL('/favicon.svg', Astro.site).toString() },
+  },
+  mainEntityOfPage: new URL(`/blog/${post.slug}/`, Astro.site).toString(),
+};
 ---
 <Base
-  title={`${post.title} — Adventure Access Journal`}
-  description={post.excerpt || `Read ${post.title} on the Adventure Access journal.`}
+  title={`${post.title} — AA Journal`}
+  description={effectiveExcerpt || `Read ${post.title} on the Adventure Access journal.`}
   ogImage={post.featured_image || undefined}
+  schema={articleSchema}
 >
   {post.featured_image && (
     <section class="relative h-[55vh] md:h-[65vh] flex items-end overflow-hidden">
@@ -48,7 +83,7 @@ function formatDate(iso: string) {
 
   <article class="py-16 md:py-24">
     <div class="max-w-3xl mx-auto px-6 md:px-14">
-      <div class="prose-post text-lg leading-relaxed text-ink-soft" set:html={post.body_html}></div>
+      <div class="prose-post text-lg leading-relaxed text-ink-soft" set:html={bodyHtml}></div>
     </div>
   </article>
 

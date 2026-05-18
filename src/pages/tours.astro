@@ -1,0 +1,61 @@
+---
+import Base from '../layouts/Base.astro';
+---
+<Base
+  title="Trips — Adventure Access"
+  description="Bookable adventures across the Himalayas and the Tibetan Plateau. Trekking, mountain biking, cultural immersion, and overland journeys in Bhutan, India, Nepal, and Yunnan."
+>
+  <!-- HERO -->
+  <section class="pt-32 md:pt-40 pb-12 md:pb-16">
+    <div class="max-w-4xl mx-auto px-6 md:px-14">
+      <div class="eyebrow mb-6">— Trips · Bookable Now</div>
+      <h1 class="display text-6xl md:text-8xl mb-8">Choose your <em class="not-italic font-light text-saffron font-display italic">journey</em>.</h1>
+      <p class="font-display text-xl md:text-2xl text-ink-soft italic leading-relaxed max-w-3xl">
+        Every trip below is led by our local guides and shaped around small groups.
+        Pick one to see the full itinerary, dates, and pricing — or use it as a starting point for something custom.
+      </p>
+    </div>
+  </section>
+
+  <!-- YOULI EMBED -->
+  <section class="py-12 md:py-20 border-t border-ink/15">
+    <div class="max-w-8xl mx-auto px-6 md:px-14">
+      <div id="youli-embed-mount" class="youli-embed">
+        <script
+          is:inline
+          src="https://youli.io/embeds/script/trips/adventure-access/?view=card&style=detailed"
+        ></script>
+      </div>
+      <noscript>
+        <p class="text-center text-ink-soft py-12">
+          Our trip list is hosted on Youli. Please
+          <a href="https://youli.io/trips/adventure-access/" class="text-saffron underline" target="_blank" rel="noopener">view our trips directly</a>
+          if you have JavaScript disabled.
+        </p>
+      </noscript>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="bg-ink text-cream py-24 md:py-32">
+    <div class="max-w-4xl mx-auto px-6 md:px-14 text-center">
+      <div class="eyebrow !text-saffron mb-6">— Don't see exactly what you want?</div>
+      <h2 class="display text-5xl md:text-6xl mb-8">Let's design <em class="not-italic font-light text-saffron font-display italic">your own</em>.</h2>
+      <p class="text-lg text-cream/80 max-w-xl mx-auto mb-10">
+        Tell us where your curiosity lives and one of our travel specialists will shape an itinerary specifically for your group.
+      </p>
+      <a href="/#contact" class="btn !bg-saffron hover:!bg-saffron-dark">Start a Conversation</a>
+    </div>
+  </section>
+</Base>
+
+<style is:global>
+  /* Make the Youli widget look at home — paint over whatever default styling it ships with where possible. */
+  .youli-embed {
+    min-height: 400px;
+  }
+  .youli-embed iframe,
+  .youli-embed > div {
+    max-width: 100%;
+  }
+</style>

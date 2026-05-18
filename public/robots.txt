@@ -1,0 +1,35 @@
+# Adventure Access — robots.txt
+# All major crawlers and AI training bots are welcome.
+
+User-agent: *
+Allow: /
+
+# Explicit welcome for AI assistants and search-engine indexers.
+User-agent: GPTBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: Claude-Web
+Allow: /
+
+User-agent: anthropic-ai
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: CCBot
+Allow: /
+
+User-agent: Bytespider
+Allow: /
+
+# Keep crawlers from wasting time on Astro internals
+Disallow: /_astro/
+
+Sitemap: https://www.adventure-access.com/sitemap.xml

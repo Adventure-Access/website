@@ -1,23 +1,7 @@
 ---
 import Base from '../layouts/Base.astro';
 import DestinationCard from '../components/DestinationCard.astro';
-import TourCard from '../components/TourCard.astro';
 import destinations from '../data/destinations.json';
-import tours from '../data/tours.json';
-
-// Group tours by category
-const byCategory: Record<string, any[]> = {};
-for (const t of tours as any[]) {
-  const c = (t.categories?.[0] || 'Itineraries').replace(' in Eastern Tibet', '');
-  if (!byCategory[c]) byCategory[c] = [];
-  byCategory[c].push(t);
-}
-const categoryOrder = ['Trekking and Hiking', 'Mountain Biking', 'Cultural Experiences', 'Family Trips', 'Uncategorized'];
-const sortedCategories = Object.keys(byCategory).sort((a, b) => {
-  const ai = categoryOrder.indexOf(a);
-  const bi = categoryOrder.indexOf(b);
-  return (ai === -1 ? 99 : ai) - (bi === -1 ? 99 : bi);
-});
 ---
 <Base
   title="Transformational Travel — Adventure Access"
@@ -26,7 +10,7 @@ const sortedCategories = Object.keys(byCategory).sort((a, b) => {
   <section class="pt-32 md:pt-40 pb-12 md:pb-16">
     <div class="max-w-8xl mx-auto px-6 md:px-14 max-w-4xl">
       <div class="eyebrow mb-6">— Transformational Travel</div>
-      <h1 class="display text-6xl md:text-8xl mb-8">Where adventure<br>meets local.</h1>
+      <h1 class="display text-6xl md:text-8xl mb-8">Where adventure<br>meets <em class="not-italic font-light text-saffron font-display italic">local</em>.</h1>
       <p class="font-display text-2xl md:text-3xl text-ink-soft leading-snug italic">
         Towering peaks, deep valleys, and a rich culture appeal to the adventurous.
         What else does it mean to experience the Roof of the World?
@@ -65,21 +49,15 @@ const sortedCategories = Object.keys(byCategory).sort((a, b) => {
     </div>
   </section>
 
-  <!-- TOURS GROUPED -->
+  <!-- BOOKABLE TRIPS — points at /tours where the Youli widget lives -->
   <section class="bg-paper py-24 md:py-32">
-    <div class="max-w-8xl mx-auto px-6 md:px-14">
-      <div class="eyebrow mb-4">— Itineraries</div>
-      <h2 class="display text-5xl md:text-6xl mb-16">Every journey we've shaped.</h2>
-      {sortedCategories.map(cat => (
-        <div class="mb-20">
-          <h3 class="display text-3xl md:text-4xl mb-8 pb-4 border-b border-ink/15">{cat}</h3>
-          <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {byCategory[cat].map((t: any) => (
-              <TourCard slug={t.slug} title={t.title} excerpt={t.excerpt || (t.plain_text || '').slice(0, 180)} category={cat} />
-            ))}
-          </div>
-        </div>
-      ))}
+    <div class="max-w-4xl mx-auto px-6 md:px-14 text-center">
+      <div class="eyebrow mb-4">— Bookable Trips</div>
+      <h2 class="display text-5xl md:text-6xl mb-6">Every journey we're <em class="not-italic font-light text-saffron font-display italic">running</em>.</h2>
+      <p class="text-lg text-ink-soft max-w-2xl mx-auto mb-10">
+        Browse every active itinerary — with dates, prices, and the option to book directly.
+      </p>
+      <a href="/tours" class="btn">View All Trips</a>
     </div>
   </section>
 </Base>

@@ -8,6 +8,8 @@ export interface Props {
   description?: string;
   ogImage?: string;
   hideNavBg?: boolean;
+  /** Optional extra JSON-LD blocks to append (Article, TouristTrip, Place, etc). */
+  schema?: object | object[];
 }
 
 const {
@@ -15,9 +17,48 @@ const {
   description = 'Custom-built adventure tours across the Himalayas and the Tibetan Plateau. Bhutan, India, Nepal, and Yunnan.',
   ogImage,
   hideNavBg = false,
+  schema,
 } = Astro.props;
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site).toString();
+const absoluteOgImage = ogImage
+  ? new URL(ogImage, Astro.site).toString()
+  : new URL('/images/2024/05/Ladakh-hero-image.jpg', Astro.site).toString();
+
+// Organization schema — emitted on every page
+const orgSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'TravelAgency',
+  name: 'Adventure Access',
+  legalName: 'Adventure Access, LLC',
+  url: Astro.site?.toString() ?? 'https://www.adventure-access.com/',
+  logo: new URL('/favicon.svg', Astro.site).toString(),
+  description:
+    'Custom adventure tours across the Himalayas and the Tibetan Plateau, with a community of local guides and operators in Bhutan, India, Nepal, and China.',
+  areaServed: ['Bhutan', 'India', 'Nepal', 'China', 'Tibet'],
+  knowsAbout: [
+    'Himalayan trekking',
+    'Tibetan Plateau travel',
+    'Mountain biking',
+    'Cultural immersion travel',
+    'Responsible tourism',
+  ],
+  email: 'info@adventure-access.com',
+  sameAs: [
+    'https://www.instagram.com/adventureaccesstours/',
+    'https://www.facebook.com/adventureaccesstours/',
+    'https://www.youtube.com/channel/UCsokw2Ok93KwNdbQKVf9NyA',
+    'https://twitter.com/TibetanAdvYeti',
+  ],
+  memberOf: [
+    { '@type': 'Organization', name: 'Adventure Travel Trade Association' },
+    { '@type': 'Organization', name: 'CREST — Center for Responsible Travel' },
+    { '@type': 'Organization', name: "Tomorrow's Air" },
+  ],
+};
+
+const extraSchemas: object[] = !schema ? [] : (Array.isArray(schema) ? schema : [schema]);
+const allSchemas = [orgSchema, ...extraSchemas];
 ---
 <!DOCTYPE html>
 <html lang="en">
@@ -36,8 +77,20 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site).toString();
     <meta property="og:description" content={description} />
     <meta property="og:type" content="website" />
     <meta property="og:url" content={canonicalURL} />
-    {ogImage && <meta property="og:image" content={ogImage} />}
+    <meta property="og:image" content={absoluteOgImage} />
+    <meta property="og:site_name" content="Adventure Access" />
+
+    <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={absoluteOgImage} />
+    <meta name="twitter:site" content="@TibetanAdvYeti" />
+
+    <!-- Structured data -->
+    {allSchemas.map((s) => (
+      <script type="application/ld+json" set:html={JSON.stringify(s)}></script>
+    ))}
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
