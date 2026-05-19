@@ -3,24 +3,32 @@ export interface Props {
   slug: string;
   country: string;
   name: string;
+  tagline?: string;
   blurb: string;
   hero: string;
   index?: number;
 }
-const { slug, country, name, blurb, hero, index } = Astro.props;
+const { slug, country, name, tagline, blurb, hero, index } = Astro.props;
 const num = index !== undefined ? String(index + 1).padStart(2, '0') : '';
+
+// Skip the country in the eyebrow if it matches the destination name
+// (avoids "01 · Nepal" followed by "NEPAL" heading).
+const showCountry = country && country.trim().toLowerCase() !== name.trim().toLowerCase();
+const eyebrow = [num && num, tagline || (showCountry ? country : '')].filter(Boolean).join(' · ');
 ---
-<a href={`/destinations/${slug}`} class="group block">
-  <div class="aspect-[4/3] overflow-hidden mb-6 bg-paper">
+<a href={`/destinations/${slug}`} class="group block h-full">
+  <div class="aspect-[4/5] overflow-hidden mb-6 bg-paper relative">
     <img
       src={hero}
       alt={name}
       loading="lazy"
-      class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+      class="w-full h-full object-cover transition-transform duration-[1200ms] ease-out group-hover:scale-[1.06]"
     />
+    {/* Subtle bottom scrim on hover for legibility */}
+    <div class="absolute inset-0 bg-gradient-to-t from-ink/40 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
   </div>
-  <div class="eyebrow mb-3">— {num && `${num} · `}{country}</div>
-  <h3 class="font-display font-medium text-3xl leading-tight tracking-tight mb-3 group-hover:text-saffron-dark transition-colors">
+  <div class="eyebrow mb-3">— {eyebrow}</div>
+  <h3 class="font-display font-medium text-3xl md:text-4xl leading-tight tracking-tight mb-3 group-hover:text-saffron-dark transition-colors">
     {name}
   </h3>
   <p class="text-ink-soft text-base leading-relaxed max-w-md">{blurb}</p>

@@ -1,0 +1,50 @@
+---
+/**
+ * Drop this into Base.astro once. Watches any element with the .reveal,
+ * .reveal-left, .reveal-right, or .reveal-scale class and toggles
+ * .is-visible when it crosses the viewport threshold. Honors reduced motion.
+ */
+---
+<script is:inline>
+  (function () {
+    if (typeof window === 'undefined') return;
+
+    const SELECTOR = '.reveal, .reveal-left, .reveal-right, .reveal-scale';
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+
+    function reveal(el) {
+      el.classList.add('is-visible');
+    }
+
+    function init() {
+      const items = document.querySelectorAll(SELECTOR);
+      if (!items.length) return;
+
+      // Reduced motion: skip animation, just show everything.
+      if (reducedMotion.matches || !('IntersectionObserver' in window)) {
+        items.forEach(reveal);
+        return;
+      }
+
+      const io = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              reveal(entry.target);
+              io.unobserve(entry.target);
+            }
+          });
+        },
+        { threshold: 0.12, rootMargin: '0px 0px -8% 0px' }
+      );
+
+      items.forEach((el) => io.observe(el));
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', init);
+    } else {
+      init();
+    }
+  })();
+</script>

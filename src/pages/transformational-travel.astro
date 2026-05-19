@@ -7,57 +7,81 @@ import destinations from '../data/destinations.json';
   title="Transformational Travel — Adventure Access"
   description="Traveling with Adventure Access combines cultural elements of regional farming and nomadic communities with important monastic centers and immersive adventure."
 >
-  <section class="pt-32 md:pt-40 pb-12 md:pb-16">
-    <div class="max-w-8xl mx-auto px-6 md:px-14 max-w-4xl">
-      <div class="eyebrow mb-6">— Transformational Travel</div>
-      <h1 class="display text-6xl md:text-8xl mb-8">Where adventure<br>meets <em class="not-italic font-light text-saffron font-display italic">local</em>.</h1>
-      <p class="font-display text-2xl md:text-3xl text-ink-soft leading-snug italic">
-        Towering peaks, deep valleys, and a rich culture appeal to the adventurous.
-        What else does it mean to experience the Roof of the World?
-      </p>
-    </div>
-  </section>
 
-  <section class="py-12 md:py-20">
-    <div class="max-w-8xl mx-auto px-6 md:px-14 grid lg:grid-cols-2 gap-12 lg:gap-20">
-      <div class="text-lg leading-relaxed text-ink-soft space-y-5">
-        <p>Traveling with Adventure Access combines the best cultural elements of regional farming and nomadic communities with important monastic centers and a growing number of opportunities to experience trails for hiking and biking as well as some of the region's most notable National Parks.</p>
-        <p>Our travel specialists and guides weave all of these rich experiences into a single narrative where the traveler can become part of the local story and experience exhilarating adventure combined with deep local encounters. Our experienced guides know how and where to combine these elements to give the traveler a seamless approach to some of the most incredible parts of the Tibetan Plateau and greater Himalayan region.</p>
-      </div>
-      <div class="grid grid-cols-2 gap-3">
-        <img src="/images/2018/08/P42417711.jpg" alt="" class="aspect-[3/4] object-cover" loading="lazy" />
-        <img src="/images/2018/08/DSC_51702.jpg" alt="" class="aspect-[3/4] object-cover mt-12" loading="lazy" />
+  <!-- HERO ON PHOTO -->
+  <section class="relative h-[60vh] md:h-[72vh] overflow-hidden bg-ink">
+    <img
+      src="/images/2021/04/trekkers-adventure-access.jpg"
+      alt="Trekkers on a high Himalayan trail"
+      class="absolute inset-0 w-full h-full object-cover kenburns"
+    />
+    <div class="absolute inset-0 bg-gradient-to-b from-ink/30 via-ink/15 to-ink/85"></div>
+    <div class="relative z-10 h-full max-w-8xl mx-auto px-6 md:px-14 flex flex-col justify-end pb-14 md:pb-20 text-cream">
+      <div class="max-w-3xl">
+        <div class="eyebrow-cream mb-6 fade-up text-shadow-hero">— Transformational Travel</div>
+        <h1 class="display text-5xl md:text-8xl fade-up-delay-1 text-shadow-hero">
+          Where adventure<br>meets <em class="not-italic font-light text-saffron font-display italic">local</em>.
+        </h1>
       </div>
     </div>
   </section>
 
-  <section class="py-20 md:py-28">
+  <!-- INTRO -->
+  <section class="bg-cream py-24 md:py-32">
+    <div class="max-w-8xl mx-auto px-6 md:px-14 grid lg:grid-cols-2 gap-16 lg:gap-24 items-center">
+      <div class="reveal-left">
+        <div class="eyebrow mb-5">— What we mean by it</div>
+        <p class="font-display text-2xl md:text-3xl text-ink-soft leading-snug italic">
+          Towering peaks, deep valleys, and a rich culture appeal to the adventurous. What else does it mean to experience the Roof of the World?
+        </p>
+      </div>
+      <div class="text-lg leading-relaxed text-ink-soft space-y-5 reveal-right">
+        <p>Traveling with Adventure Access combines the best of regional farming and nomadic communities with important monastic centers and a growing number of opportunities to hike, bike, and explore some of the region's most notable National Parks.</p>
+        <p>Our travel specialists and guides weave all of these rich experiences into a single narrative where the traveler becomes part of the local story — exhilarating adventure combined with deep local encounters.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Image strip break -->
+  <section class="bg-paper py-12 md:py-16">
+    <div class="max-w-8xl mx-auto px-6 md:px-14 grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-5">
+      <img src="/images/2018/08/P42417711.jpg" alt="" class="aspect-[4/5] object-cover reveal" loading="lazy" />
+      <img src="/images/2018/08/DSC_51702.jpg" alt="" class="aspect-[4/5] object-cover reveal mt-8 md:mt-12" data-delay="100" loading="lazy" />
+      <img src="/images/2024/03/ladakh01.jpg" alt="" class="aspect-[4/5] object-cover reveal" data-delay="200" loading="lazy" />
+      <img src="/images/2024/03/bhutan01.jpg" alt="" class="aspect-[4/5] object-cover reveal mt-8 md:mt-12" data-delay="300" loading="lazy" />
+    </div>
+  </section>
+
+  <!-- DESTINATIONS -->
+  <section class="bg-paper py-24 md:py-32">
     <div class="max-w-8xl mx-auto px-6 md:px-14">
-      <div class="mb-14 pb-8 border-b border-ink/15">
+      <div class="mb-14 pb-8 border-b border-ink/15 reveal">
         <div class="eyebrow mb-4">— Four Destinations</div>
-        <h2 class="display text-5xl md:text-6xl">Travel through vast mountainous regions.</h2>
+        <h2 class="display text-5xl md:text-7xl">Pick your <em class="not-italic font-light text-saffron font-display italic">place</em>.</h2>
         <p class="text-lg text-ink-soft mt-6 max-w-2xl">
-          Hike, bike, paddle, visit National Parks, or slow down by adding a night at a local homestay.
+          Hike, bike, paddle, visit National Parks, or slow down with a homestay night.
           Visit monasteries, experience local customs and food.
         </p>
       </div>
-      <div class="grid md:grid-cols-2 gap-10 md:gap-14">
+      <div class="grid md:grid-cols-2 gap-12 md:gap-16">
         {destinations.map((d, i) => (
-          <DestinationCard slug={d.slug} country={d.country} name={d.name} blurb={d.blurb} hero={d.hero} index={i} />
+          <div class="reveal" data-delay={String([0, 100, 200, 300, 400][i] ?? 400)}>
+            <DestinationCard slug={d.slug} country={d.country} name={d.name} tagline={d.tagline} blurb={d.blurb} hero={d.hero} index={i} />
+          </div>
         ))}
       </div>
     </div>
   </section>
 
-  <!-- BOOKABLE TRIPS — points at /tours where the Youli widget lives -->
-  <section class="bg-paper py-24 md:py-32">
-    <div class="max-w-4xl mx-auto px-6 md:px-14 text-center">
-      <div class="eyebrow mb-4">— Bookable Trips</div>
-      <h2 class="display text-5xl md:text-6xl mb-6">Every journey we're <em class="not-italic font-light text-saffron font-display italic">running</em>.</h2>
-      <p class="text-lg text-ink-soft max-w-2xl mx-auto mb-10">
+  <!-- CTA on dark -->
+  <section class="bg-ink text-cream py-28 md:py-36">
+    <div class="max-w-4xl mx-auto px-6 md:px-14 text-center reveal">
+      <div class="eyebrow-cream mb-4">— Bookable Trips</div>
+      <h2 class="display text-5xl md:text-7xl mb-6">Every journey we're <em class="not-italic font-light text-saffron font-display italic">running</em>.</h2>
+      <p class="text-lg text-cream/80 max-w-2xl mx-auto mb-10">
         Browse every active itinerary — with dates, prices, and the option to book directly.
       </p>
-      <a href="/tours" class="btn">View All Trips</a>
+      <a href="/tours" class="btn-cream">View All Trips</a>
     </div>
   </section>
 </Base>

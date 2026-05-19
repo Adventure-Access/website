@@ -62,12 +62,12 @@ const articleSchema = {
   schema={articleSchema}
 >
   {post.featured_image && (
-    <section class="relative h-[55vh] md:h-[65vh] flex items-end overflow-hidden">
-      <img src={post.featured_image} alt={post.title} class="absolute inset-0 w-full h-full object-cover" />
-      <div class="absolute inset-0 bg-gradient-to-b from-ink/15 via-transparent to-ink/80"></div>
-      <div class="relative max-w-4xl mx-auto w-full px-6 md:px-14 pb-12 md:pb-20 text-cream">
-        <div class="eyebrow !text-cream/80 mb-4">— The Journal · {formatDate(post.date)}</div>
-        <h1 class="display text-4xl md:text-6xl leading-tight max-w-3xl">{post.title}</h1>
+    <section class="relative h-[60vh] md:h-[78vh] flex items-end overflow-hidden bg-ink">
+      <img src={post.featured_image} alt={post.title} class="absolute inset-0 w-full h-full object-cover kenburns" />
+      <div class="absolute inset-0 bg-gradient-to-b from-ink/30 via-ink/10 to-ink/85"></div>
+      <div class="relative max-w-4xl mx-auto w-full px-6 md:px-14 pb-14 md:pb-24 text-cream">
+        <div class="eyebrow-cream mb-5 fade-up text-shadow-hero">— The Journal · {formatDate(post.date)}</div>
+        <h1 class="display text-4xl md:text-6xl leading-tight max-w-3xl fade-up-delay-1 text-shadow-hero">{post.title}</h1>
       </div>
     </section>
   )}
@@ -111,12 +111,23 @@ const articleSchema = {
 
 <style is:global>
   .prose-post p { margin-bottom: 1.4rem; }
+  .prose-post p.lead {
+    font-family: 'Fraunces', serif;
+    font-size: 1.5rem;
+    line-height: 1.45;
+    color: #2b3540;
+    margin-bottom: 2rem;
+    font-weight: 400;
+  }
+  @media (min-width: 768px) {
+    .prose-post p.lead { font-size: 1.75rem; }
+  }
   .prose-post h2, .prose-post h3, .prose-post h4 {
     font-family: 'Fraunces', serif; color: #2b3540;
-    margin-top: 2.5rem; margin-bottom: 1rem;
+    margin-top: 3rem; margin-bottom: 1.25rem;
     line-height: 1.1;
   }
-  .prose-post h2 { font-size: 2rem; }
+  .prose-post h2 { font-size: 2.25rem; }
   .prose-post h3 { font-size: 1.6rem; }
   .prose-post h4 { font-size: 1.3rem; }
   .prose-post strong { color: #2b3540; font-weight: 600; }
@@ -143,14 +154,23 @@ const articleSchema = {
   .prose-post .aligncenter { margin-left: auto; margin-right: auto; }
   .prose-post .alignleft  { float: left;  margin-right: 1.5rem; margin-bottom: 1rem; }
   .prose-post .alignright { float: right; margin-left: 1.5rem;  margin-bottom: 1rem; }
-  .prose-post figure { margin: 2rem 0; }
-  .prose-post figure img { margin: 0; }
+  .prose-post figure {
+    margin: 3rem -2rem;
+  }
+  @media (min-width: 1024px) {
+    .prose-post figure {
+      /* Let figures break out of the narrow text column for impact */
+      margin: 4rem -8rem;
+    }
+  }
+  .prose-post figure img { margin: 0; aspect-ratio: 16 / 10; object-fit: cover; }
   .prose-post figcaption {
     font-size: 0.875rem;
     color: #5a6470;
     text-align: center;
-    margin-top: 0.5rem;
+    margin-top: 0.75rem;
     font-style: italic;
+    letter-spacing: 0.02em;
   }
   .prose-post table { width: 100%; margin: 1.5rem 0; border-collapse: collapse; }
   .prose-post th, .prose-post td { border-bottom: 1px solid #e5dfd0; padding: 0.75rem 0.5rem; text-align: left; }

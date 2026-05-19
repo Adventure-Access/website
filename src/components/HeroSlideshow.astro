@@ -1,0 +1,129 @@
+---
+/**
+ * Fading photo slideshow with subtle ken-burns. Pure CSS transitions,
+ * a tiny inline script handles the timer + dot interaction + reduced-motion.
+ *
+ * Pass an array of { src, alt } slides.
+ */
+export interface Slide {
+  src: string;
+  alt: string;
+}
+export interface Props {
+  slides: Slide[];
+  /** Time each slide is shown, in ms. Defaults to 6500. */
+  duration?: number;
+  /** Show the dot indicators below the hero. */
+  showDots?: boolean;
+}
+const { slides, duration = 6500, showDots = true } = Astro.props;
+---
+<div class="hero-slideshow absolute inset-0 overflow-hidden bg-ink" data-duration={duration} data-slideshow>
+  {slides.map((slide, i) => (
+    <img
+      src={slide.src}
+      alt={slide.alt}
+      class:list={[
+        'slideshow-img absolute inset-0 w-full h-full object-cover kenburns-slow',
+        i === 0 && 'is-active',
+      ]}
+      data-index={i}
+      loading={i === 0 ? 'eager' : 'lazy'}
+      fetchpriority={i === 0 ? 'high' : 'auto'}
+      decoding="async"
+    />
+  ))}
+
+  {/* Stronger gradient than before — keeps saffron text legible against any photo */}
+  <div class="absolute inset-0 bg-gradient-to-b from-ink/35 via-ink/15 to-ink/85 pointer-events-none z-[2]" aria-hidden="true"></div>
+  <div class="absolute inset-0 bg-gradient-to-r from-ink/40 via-transparent to-transparent pointer-events-none z-[2]" aria-hidden="true"></div>
+
+  {showDots && slides.length > 1 && (
+    <div
+      class="absolute bottom-6 left-6 md:left-14 z-[5] flex items-center gap-3"
+      role="tablist"
+      aria-label="Hero slideshow"
+    >
+      {slides.map((slide, i) => (
+        <button
+          type="button"
+          class="slideshow-dot-btn group p-2 -m-2"
+          role="tab"
+          aria-label={`Show slide ${i + 1}: ${slide.alt}`}
+          aria-selected={i === 0 ? 'true' : 'false'}
+          data-index={i}
+        >
+          <span class:list={['slideshow-dot', i === 0 && 'is-active']}></span>
+        </button>
+      ))}
+    </div>
+  )}
+</div>
+
+<script is:inline>
+  (function () {
+    // Run once per slideshow on the page. The script is global-scoped via
+    // is:inline, so we attach behaviour to every [data-slideshow] root.
+    const roots = document.querySelectorAll('[data-slideshow]');
+    roots.forEach((root) => initSlideshow(root));
+
+    function initSlideshow(root) {
+    const duration = Number(root.dataset.duration) || 6500;
+    const slides = Array.from(root.querySelectorAll('.slideshow-img'));
+    const dots   = Array.from(root.querySelectorAll('.slideshow-dot-btn'));
+    if (slides.length <= 1) return;
+
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)');
+    let index = 0;
+    let timer;
+
+    function show(next) {
+      if (next === index) return;
+      slides[index].classList.remove('is-active');
+      slides[next].classList.add('is-active');
+      if (dots.length) {
+        dots[index].querySelector('.slideshow-dot').classList.remove('is-active');
+        dots[index].setAttribute('aria-selected', 'false');
+        dots[next].querySelector('.slideshow-dot').classList.add('is-active');
+        dots[next].setAttribute('aria-selected', 'true');
+      }
+      index = next;
+    }
+
+    function advance() {
+      show((index + 1) % slides.length);
+    }
+
+    function start() {
+      stop();
+      if (reduced.matches) return;
+      timer = window.setInterval(advance, duration);
+    }
+    function stop() {
+      if (timer) window.clearInterval(timer);
+      timer = null;
+    }
+
+    dots.forEach((dot) => {
+      dot.addEventListener('click', () => {
+        const next = Number(dot.dataset.index);
+        show(next);
+        start(); // reset interval after manual nav
+      });
+    });
+
+    // Pause when tab is hidden
+    document.addEventListener('visibilitychange', () => {
+      if (document.hidden) stop();
+      else start();
+    });
+
+    reduced.addEventListener?.('change', () => {
+      if (reduced.matches) stop();
+      else start();
+    });
+
+    start();
+    }
+  })();
+</script>
