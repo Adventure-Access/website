@@ -10,6 +10,53 @@ media_folder: public/images/uploads
 public_folder: /images/uploads
 
 collections:
+  - name: blog
+    label: Journal Posts
+    label_singular: Journal Post
+    folder: src/content/blog
+    create: true
+    slug: "{{slug}}"
+    preview_path: "blog/{{slug}}"
+    summary: "{{title}} — {{date}}"
+    sortable_fields: [date, title]
+    fields:
+      - name: title
+        label: Title
+        widget: string
+
+      - name: date
+        label: Publish Date
+        widget: datetime
+        format: "YYYY-MM-DD"
+        date_format: "YYYY-MM-DD"
+        time_format: false
+
+      - name: excerpt
+        label: Excerpt / Meta Description
+        widget: text
+        hint: "Shown in blog cards and as the SEO meta description. Keep under 155 characters."
+
+      - name: featured_image
+        label: Featured Image
+        widget: image
+        required: false
+        hint: "Hero image for the post. Shown at the top of the article and in blog cards."
+
+      - name: destination
+        label: Related Destination
+        widget: select
+        required: false
+        options:
+          - { label: "Ladakh & Zanskar", value: ladakh }
+          - { label: "Nepal", value: nepal }
+          - { label: "Bhutan", value: bhutan }
+          - { label: "Yunnan & Lijiang", value: yunnan }
+        hint: "Links this post to a destination page — a 'Explore [Destination]' CTA block appears at the bottom of the article."
+
+      - name: body
+        label: Body
+        widget: markdown
+
   - name: testimonials
     label: Testimonials
     files:

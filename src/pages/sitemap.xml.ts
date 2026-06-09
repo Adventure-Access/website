@@ -1,6 +1,6 @@
 import type { APIRoute } from 'astro';
+import { getCollection } from 'astro:content';
 import destinations from '../data/destinations.json';
-import posts from '../data/blog-posts.json';
 
 const SITE = 'https://www.adventure-access.com';
 
@@ -12,10 +12,12 @@ const staticUrls = [
   { loc: '/blog/',                             priority: '0.9', changefreq: 'weekly'  },
   { loc: '/privacy-cookie-policy/',            priority: '0.3', changefreq: 'yearly'  },
   { loc: '/payment-terms-cancellation-policy/', priority: '0.3', changefreq: 'yearly' },
-  { loc: '/thank-you/',                        priority: '0.1', changefreq: 'yearly'  },
+  // /thank-you/ intentionally excluded — noindex conversion page
 ];
 
-export const GET: APIRoute = () => {
+export const GET: APIRoute = async () => {
+  const posts = await getCollection('blog');
+
   const urls = [
     ...staticUrls,
     ...(destinations as any[]).map((d) => ({
@@ -23,9 +25,9 @@ export const GET: APIRoute = () => {
       priority:   '0.8',
       changefreq: 'monthly',
     })),
-    ...(posts as any[]).map((p) => ({
+    ...posts.map((p) => ({
       loc:        `/blog/${p.slug}/`,
-      lastmod:    p.date ? p.date.slice(0, 10) : undefined,
+      lastmod:    p.data.date.toISOString().slice(0, 10),
       priority:   '0.6',
       changefreq: 'monthly',
     })),

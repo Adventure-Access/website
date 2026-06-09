@@ -9,6 +9,8 @@ export interface Props {
   description?: string;
   ogImage?: string;
   hideNavBg?: boolean;
+  /** Set true to emit a noindex tag (e.g. thank-you, search results). */
+  noindex?: boolean;
   /** Optional extra JSON-LD blocks to append (Article, TouristTrip, Place, etc). */
   schema?: object | object[];
 }
@@ -18,6 +20,7 @@ const {
   description = 'Custom-built adventure tours across the Himalayas and the Tibetan Plateau. Bhutan, India, Nepal, and Yunnan.',
   ogImage,
   hideNavBg = false,
+  noindex = false,
   schema,
 } = Astro.props;
 
@@ -69,6 +72,7 @@ const allSchemas = [orgSchema, ...extraSchemas];
     <meta name="generator" content={Astro.generator} />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="canonical" href={canonicalURL} />
+    {noindex && <meta name="robots" content="noindex, follow" />}
 
     <title>{title}</title>
     <meta name="description" content={description} />

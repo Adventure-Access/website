@@ -26,3 +26,6 @@ pnpm-debug.log*
 
 # Netlify
 .netlify/
+
+# Audit reports (local reference only)
+seo-ai-visibility-audit.md

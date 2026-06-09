@@ -1,104 +1,134 @@
 ---
 import Base from '../../layouts/Base.astro';
-import posts from '../../data/blog-posts.json';
+import { getCollection } from 'astro:content';
 
 export async function getStaticPaths() {
-  const data = (await import('../../data/blog-posts.json')).default as Array<any>;
-  return data.map((p) => ({ params: { slug: p.slug } }));
+  const posts = await getCollection('blog');
+  return posts.map((entry) => ({ params: { slug: entry.slug }, props: { entry } }));
 }
 
-const { slug } = Astro.params;
-const all = posts as Array<any>;
-const idx = all.findIndex(p => p.slug === slug);
-if (idx === -1) throw new Error(`Post not found: ${slug}`);
-const post = all[idx];
-const newer = idx > 0 ? all[idx - 1] : null;
-const older = idx < all.length - 1 ? all[idx + 1] : null;
+const { entry } = Astro.props;
+const { Content } = await entry.render();
 
-function formatDate(iso: string) {
-  if (!iso) return '';
-  const d = new Date(iso.replace(' ', 'T') + 'Z');
-  return d.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
-}
-
-// Fallback excerpt from body text when WP didn't give us one
-function fallbackExcerpt(html: string, max = 200): string {
-  if (!html) return '';
-  const stripped = html.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim();
-  if (stripped.length <= max) return stripped;
-  return stripped.slice(0, max).replace(/\s+\S*$/, '') + '…';
-}
-const effectiveExcerpt = post.excerpt || fallbackExcerpt(post.body_html);
-
-// Add loading="lazy" to body images that don't already have it
-const bodyHtml = (post.body_html || '').replace(
-  /<img(?![^>]*loading=)([^>]*)>/g,
-  '<img loading="lazy"$1>'
+// Sort all posts newest-first to find prev/next
+const allPosts = (await getCollection('blog')).sort(
+  (a, b) => b.data.date.getTime() - a.data.date.getTime()
 );
+const idx = allPosts.findIndex((p) => p.slug === entry.slug);
+const newer = idx > 0 ? allPosts[idx - 1] : null;
+const older = idx < allPosts.length - 1 ? allPosts[idx + 1] : null;
 
-// Article JSON-LD
+function formatDate(date: Date) {
+  return date.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+}
+
+// Trim excerpt to 155 chars for meta description
+const rawExcerpt = entry.data.excerpt ?? '';
+const metaDescription = rawExcerpt.length > 155
+  ? rawExcerpt.slice(0, 155).replace(/\s+\S*$/, '') + '…'
+  : rawExcerpt;
+
+// BreadcrumbList schema
+const breadcrumbSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Home', item: new URL('/', Astro.site).toString() },
+    { '@type': 'ListItem', position: 2, name: 'Journal', item: new URL('/blog/', Astro.site).toString() },
+    { '@type': 'ListItem', position: 3, name: entry.data.title, item: new URL(`/blog/${entry.slug}/`, Astro.site).toString() },
+  ],
+};
+
+// Article schema
 const articleSchema = {
   '@context': 'https://schema.org',
   '@type': 'Article',
-  headline: post.title,
-  datePublished: post.date,
-  dateModified: post.date,
-  description: effectiveExcerpt,
-  image: post.featured_image ? new URL(post.featured_image, Astro.site).toString() : undefined,
-  url: new URL(`/blog/${post.slug}/`, Astro.site).toString(),
+  headline: entry.data.title,
+  datePublished: entry.data.date.toISOString(),
+  dateModified: entry.data.date.toISOString(),
+  description: metaDescription,
+  image: entry.data.featured_image ? new URL(entry.data.featured_image, Astro.site).toString() : undefined,
+  url: new URL(`/blog/${entry.slug}/`, Astro.site).toString(),
   author: { '@type': 'Organization', name: 'Adventure Access' },
   publisher: {
     '@type': 'Organization',
     name: 'Adventure Access',
     logo: { '@type': 'ImageObject', url: new URL('/favicon.svg', Astro.site).toString() },
   },
-  mainEntityOfPage: new URL(`/blog/${post.slug}/`, Astro.site).toString(),
+  mainEntityOfPage: new URL(`/blog/${entry.slug}/`, Astro.site).toString(),
 };
+
+// Destination CTA data — used when post has a destination field
+const destinationMeta: Record<string, { name: string; country: string; href: string }> = {
+  ladakh:  { name: 'Ladakh & Zanskar', country: 'India',  href: '/destinations/ladakh'  },
+  nepal:   { name: 'Nepal',            country: 'Nepal',  href: '/destinations/nepal'   },
+  bhutan:  { name: 'Bhutan',           country: 'Bhutan', href: '/destinations/bhutan'  },
+  yunnan:  { name: 'Yunnan & Lijiang', country: 'China',  href: '/destinations/yunnan'  },
+};
+const destCta = entry.data.destination ? destinationMeta[entry.data.destination] : null;
 ---
 <Base
-  title={`${post.title} — AA Journal`}
-  description={effectiveExcerpt || `Read ${post.title} on the Adventure Access journal.`}
-  ogImage={post.featured_image || undefined}
-  schema={articleSchema}
+  title={`${entry.data.title} — AA Journal`}
+  description={metaDescription || `Read ${entry.data.title} on the Adventure Access journal.`}
+  ogImage={entry.data.featured_image || undefined}
+  schema={[articleSchema, breadcrumbSchema]}
 >
-  {post.featured_image && (
+  {entry.data.featured_image && (
     <section class="relative h-[60vh] md:h-[78vh] flex items-end overflow-hidden bg-ink">
-      <img src={post.featured_image} alt={post.title} class="absolute inset-0 w-full h-full object-cover kenburns" />
+      <img src={entry.data.featured_image} alt={entry.data.title} class="absolute inset-0 w-full h-full object-cover kenburns" />
       <div class="absolute inset-0 bg-gradient-to-b from-ink/30 via-ink/10 to-ink/85"></div>
       <div class="relative max-w-4xl mx-auto w-full px-6 md:px-14 pb-14 md:pb-24 text-cream">
-        <div class="eyebrow-cream mb-5 fade-up text-shadow-hero">— The Journal · {formatDate(post.date)}</div>
-        <h1 class="display text-4xl md:text-6xl leading-tight max-w-3xl fade-up-delay-1 text-shadow-hero">{post.title}</h1>
+        <div class="eyebrow-cream mb-5 fade-up text-shadow-hero">— The Journal · {formatDate(entry.data.date)}</div>
+        <h1 class="display text-4xl md:text-6xl leading-tight max-w-3xl fade-up-delay-1 text-shadow-hero">{entry.data.title}</h1>
       </div>
     </section>
   )}
 
-  {!post.featured_image && (
+  {!entry.data.featured_image && (
     <section class="pt-32 md:pt-40 pb-8">
       <div class="max-w-3xl mx-auto px-6 md:px-14">
-        <div class="eyebrow mb-5">— The Journal · {formatDate(post.date)}</div>
-        <h1 class="display text-5xl md:text-6xl">{post.title}</h1>
+        <div class="eyebrow mb-5">— The Journal · {formatDate(entry.data.date)}</div>
+        <h1 class="display text-5xl md:text-6xl">{entry.data.title}</h1>
       </div>
     </section>
   )}
 
   <article class="py-16 md:py-24">
     <div class="max-w-3xl mx-auto px-6 md:px-14">
-      <div class="prose-post text-lg leading-relaxed text-ink-soft" set:html={bodyHtml}></div>
+      <div class="prose-post text-lg leading-relaxed text-ink-soft">
+        <Content />
+      </div>
     </div>
   </article>
+
+  {/* Destination CTA — only rendered when post has a destination field */}
+  {destCta && (
+    <section class="bg-paper border-t border-ink/10 py-16 md:py-20">
+      <div class="max-w-3xl mx-auto px-6 md:px-14 flex flex-col md:flex-row md:items-center gap-8 md:gap-16">
+        <div class="flex-1">
+          <div class="eyebrow mb-3">— Explore the destination</div>
+          <h2 class="display text-3xl md:text-4xl mb-3">{destCta.name}</h2>
+          <p class="text-ink-soft leading-relaxed">
+            Read more about traveling in {destCta.country} with Adventure Access — culture, adventure, and how to plan your trip.
+          </p>
+        </div>
+        <a href={destCta.href} class="btn shrink-0">Explore {destCta.name} →</a>
+      </div>
+    </section>
+  )}
 
   <nav class="border-t border-ink/15 py-12 md:py-16">
     <div class="max-w-4xl mx-auto px-6 md:px-14 grid md:grid-cols-2 gap-10">
       {newer ? (
         <a href={`/blog/${newer.slug}`} class="group block">
           <div class="eyebrow mb-2">← Newer</div>
-          <div class="font-display text-xl md:text-2xl group-hover:text-saffron-dark transition-colors">{newer.title}</div>
+          <div class="font-display text-xl md:text-2xl group-hover:text-saffron-dark transition-colors">{newer.data.title}</div>
         </a>
       ) : <div></div>}
       {older ? (
         <a href={`/blog/${older.slug}`} class="group block md:text-right">
           <div class="eyebrow mb-2">Older →</div>
-          <div class="font-display text-xl md:text-2xl group-hover:text-saffron-dark transition-colors">{older.title}</div>
+          <div class="font-display text-xl md:text-2xl group-hover:text-saffron-dark transition-colors">{older.data.title}</div>
         </a>
       ) : <div></div>}
     </div>
@@ -150,18 +180,14 @@ const articleSchema = {
     height: auto;
     margin: 2rem 0;
     display: block;
+    loading: lazy;
   }
   .prose-post .aligncenter { margin-left: auto; margin-right: auto; }
   .prose-post .alignleft  { float: left;  margin-right: 1.5rem; margin-bottom: 1rem; }
   .prose-post .alignright { float: right; margin-left: 1.5rem;  margin-bottom: 1rem; }
-  .prose-post figure {
-    margin: 3rem -2rem;
-  }
+  .prose-post figure { margin: 3rem -2rem; }
   @media (min-width: 1024px) {
-    .prose-post figure {
-      /* Let figures break out of the narrow text column for impact */
-      margin: 4rem -8rem;
-    }
+    .prose-post figure { margin: 4rem -8rem; }
   }
   .prose-post figure img { margin: 0; aspect-ratio: 16 / 10; object-fit: cover; }
   .prose-post figcaption {
