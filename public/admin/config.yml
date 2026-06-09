@@ -6,6 +6,8 @@ backend:
 # (changes go to a draft branch and require review before publishing)
 # publish_mode: editorial_workflow
 
+site_url: https://www.adventure-access.com
+
 media_folder: public/images/uploads
 public_folder: /images/uploads
 

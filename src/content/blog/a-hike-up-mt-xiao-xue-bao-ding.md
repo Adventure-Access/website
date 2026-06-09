@@ -1,7 +1,7 @@
 ---
 title: "A Hike Up Mt. Xiao Xue Bao Ding"
 date: 2015-10-28
-excerpt: "Quidem repudiandae soluta rerum laborum recusandae culpa libero aut rerum nam est eum et voluptatem ipsam distinctio est est rerum est autem esse saepe ut…"
+excerpt: "Two Adventure Access team members set off from Chengdu to climb Xiao Xue Bao Ding — sister peak of Xue Bao Ding, the easternmost mountain in the Himalayas, at 17,900 feet."
 featured_image: "/images/2017/11/Cals-pics-51-1.jpg"
 ---
 

@@ -1,7 +1,7 @@
 ---
 title: "Tibetan New Year"
 date: 2017-02-01
-excerpt: "Nihil incidunt odio dolor ipsum nemo accusantium est fuga fugiat omnis aut expedita in praesentium consequatur autem quo laborum quam dolorem vero…"
+excerpt: "Losar, the Tibetan New Year, is celebrated across Tibetan Buddhist regions. Though lunar like the Chinese New Year, it historically falls on a different date — sometimes a month apart in Lhasa."
 featured_image: "/images/2017/11/Tibetan-New-Year.jpg"
 ---
 
