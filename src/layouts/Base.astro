@@ -98,15 +98,14 @@ const allSchemas = [orgSchema, ...extraSchemas];
     ))}
 
     <!-- Netlify Identity (required for Decap CMS login redirect) -->
-    <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
-    <script>
+    <!-- is:inline prevents Astro from bundling these — they must run as plain scripts -->
+    <script is:inline src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+    <script is:inline>
       // Open the Identity widget automatically when an invite, recovery,
       // or email-confirmation token is present in the URL hash.
-      // Without this the widget loads silently and the user just sees the homepage.
       if (window.netlifyIdentity) {
         window.netlifyIdentity.on('init', function(user) {
-          // Auto-open the modal AFTER the widget has fully initialized,
-          // so the API is ready to handle invite/recovery/confirmation flows.
+          // Auto-open the modal AFTER the widget has fully initialized
           var hash = window.location.hash;
           if (
             hash.indexOf('invite_token=') !== -1 ||
@@ -115,7 +114,6 @@ const allSchemas = [orgSchema, ...extraSchemas];
           ) {
             window.netlifyIdentity.open();
           }
-
           if (!user) {
             window.netlifyIdentity.on('login', function() {
               document.location.href = '/admin/';
