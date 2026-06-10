@@ -101,6 +101,27 @@ const destCta = entry.data.destination ? destinationMeta[entry.data.destination]
     </div>
   </article>
 
+  {/* Photo Gallery — rendered when post has gallery images */}
+  {entry.data.gallery && entry.data.gallery.length > 0 && (
+    <section class="py-16 md:py-20 border-t border-ink/10">
+      <div class="max-w-5xl mx-auto px-6 md:px-14">
+        <div class="eyebrow mb-8">— Photos</div>
+        <div class="grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-4">
+          {entry.data.gallery.map((src: string, i: number) => (
+            <div class="aspect-[4/3] overflow-hidden bg-paper">
+              <img
+                src={src}
+                alt={`${entry.data.title} — photo ${i + 1}`}
+                loading="lazy"
+                class="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
+              />
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+
   {/* Destination CTA — only rendered when post has a destination field */}
   {destCta && (
     <section class="bg-paper border-t border-ink/10 py-16 md:py-20">

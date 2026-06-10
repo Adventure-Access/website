@@ -55,6 +55,16 @@ collections:
           - { label: "Yunnan & Lijiang", value: yunnan }
         hint: "Links this post to a destination page — a 'Explore [Destination]' CTA block appears at the bottom of the article."
 
+      - name: gallery
+        label: Photo Gallery
+        widget: list
+        required: false
+        hint: "Photos shown in a grid at the bottom of the post. Click + to add images, drag to reorder."
+        field:
+          name: image
+          label: Photo
+          widget: image
+
       - name: body
         label: Body
         widget: markdown

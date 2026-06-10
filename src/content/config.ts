@@ -15,6 +15,8 @@ const blog = defineCollection({
      * pointing readers to /destinations/{destination}.
      */
     destination: z.enum(['ladakh', 'nepal', 'bhutan', 'yunnan']).optional(),
+    /** Optional photo gallery shown at the bottom of the post. */
+    gallery: z.array(z.string()).optional(),
   }),
 });
 
