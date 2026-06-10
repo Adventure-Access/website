@@ -61,9 +61,9 @@ const breadcrumbSchema = {
   <!-- SECTIONS (editorial) -->
   <section class="pb-24 md:pb-32">
     <div class="max-w-4xl mx-auto px-6 md:px-14 space-y-20">
-      {dest.sections.map((s: any) => (
+      {dest.sections.map((s: any, i: number) => (
         <article>
-          <div class="eyebrow mb-4">— Chapter</div>
+          <div class="eyebrow mb-4">— {String(i + 1).padStart(2, '0')}</div>
           <h2 class="display text-4xl md:text-5xl mb-6">{s.title}</h2>
           <div class="text-lg leading-relaxed text-ink-soft space-y-5">
             {s.body.split('\n\n').map((p: string) => <p>{p}</p>)}
