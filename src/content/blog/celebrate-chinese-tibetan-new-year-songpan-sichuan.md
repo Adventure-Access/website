@@ -24,7 +24,7 @@ destination: yunnan
 
 &nbsp;
 
-<span style="font-weight: 400;">This coming year, we are once again opening our doors to you too. Come join our staff and local friends in </span><a href="https://adventure-access.com/destination/songpan/"><b>Songpan</b></a><span style="font-weight: 400;"> for an adventure-filled experience. Fireworks, dragons, and dancing will be in abundance. Hiking and a visit to a National Park are on the schedule. Staying in a Tibetan village in the host home of a local as they celebrate the festivities of what is known as Losar, the Tibetan name for the New Year, is an unforgettable experience. The soul is refreshed by blue skies and snow on the forest floor. The scent of pine trees fills the crisp air this time of year.</span>
+<span style="font-weight: 400;">This coming year, we are once again opening our doors to you too. Come join our staff and local friends in </span><b>Songpan</b><span style="font-weight: 400;"> for an adventure-filled experience. Fireworks, dragons, and dancing will be in abundance. Hiking and a visit to a National Park are on the schedule. Staying in a Tibetan village in the host home of a local as they celebrate the festivities of what is known as Losar, the Tibetan name for the New Year, is an unforgettable experience. The soul is refreshed by blue skies and snow on the forest floor. The scent of pine trees fills the crisp air this time of year.</span>
 
 &nbsp;
 
@@ -32,5 +32,5 @@ destination: yunnan
 
 &nbsp;
 
-<span style="font-weight: 400;">New Year in </span><a href="https://adventure-access.com/destination/songpan/"><b>Songpan</b></a><span style="font-weight: 400;"> has it all. Culture is rich. The outdoors beckons. Gather old friends to come along and join in to make new friends! </span><a href="https://adventure-access.com/#contact"><b>Contact us</b></a><span style="font-weight: 400;"> now to reserve your place with us this year!</span>
+<span style="font-weight: 400;">New Year in </span><b>Songpan</b><span style="font-weight: 400;"> has it all. Culture is rich. The outdoors beckons. Gather old friends to come along and join in to make new friends! </span><a href="/#contact"><b>Contact us</b></a><span style="font-weight: 400;"> now to reserve your place with us this year!</span>
 <p style="text-align: center;">[su_custom_gallery source="media: 3282, 3283, 3284, 1288,1287,1286" limit="30" link="lightbox" width="480" height="480"]</p>

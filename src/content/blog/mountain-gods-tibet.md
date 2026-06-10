@@ -7,7 +7,7 @@ featured_image: "/images/2021/04/thangkha-adventure-access.jpg"
 
 <img class="aligncenter" src="/images/2021/04/adventure-access-flags-300x169.jpg" alt="flags hanging tibet" width="300" height="169" />
 
-<span style="font-weight: 400;">If you’ve ever seen a documentary about climbing Mount Everest, you have probably seen <a href="https://adventure-access.com/sherpa-ethnic-heritage-not-profession/">Sherpas</a> leading expedition teams to make offerings around a monument of stones and prayer flags near basecamp as they set off to climb.  </span>
+<span style="font-weight: 400;">If you’ve ever seen a documentary about climbing Mount Everest, you have probably seen <a href="/blog/sherpa-ethnic-heritage-not-profession">Sherpas</a> leading expedition teams to make offerings around a monument of stones and prayer flags near basecamp as they set off to climb.  </span>
 
 <img class="aligncenter" src="/images/2021/04/machen-mountain-god-300x225.jpg" alt="machen mountain god image" width="300" height="225" />
 
@@ -29,7 +29,7 @@ featured_image: "/images/2021/04/thangkha-adventure-access.jpg"
 <h2>Mount Kailash</h2>
 <span style="font-weight: 400;">Mount Kailash </span><span style="font-weight: 400;">གངས་རིན་པ)་ཆ+</span><span style="font-weight: 400;">, in far western Tibet, is the holiest of all the mountains in the broader Himalayan region. Though it is only 21,778 feet tall, it holds a huge position in the minds and hearts of those who see it through a spiritual lens. It is the most sacred of all mountains to Buddhists and Hindus as well as the practitioners of Jainism and the pre-buddhist religion of  Tibet known as Bon. Kailash is considered to be the axis of the world with its four faces nearly aligning with the cardinal directions. The mountain has never been climbed.  </span>
 
-<span style="font-weight: 400;">Several notable holy mountains in the Amdo region of the Tibetan Plateau include Nyanbo Yurtze, Amnye Machen, Leng nga Zhaga, and Shar Dongri (also known as <a href="https://adventure-access.com/a-hike-up-mt-xiao-xue-bao-ding/">Xuebaoding</a>). These are pictured below: </span>
+<span style="font-weight: 400;">Several notable holy mountains in the Amdo region of the Tibetan Plateau include Nyanbo Yurtze, Amnye Machen, Leng nga Zhaga, and Shar Dongri (also known as <a href="/blog/a-hike-up-mt-xiao-xue-bao-ding">Xuebaoding</a>). These are pictured below: </span>
 
 <figure class="wp-figure"><img src="/images/2021/04/nyanbo-yurtze-adventure-access-300x200.jpg" alt="mountain gods tibetan people" width="300" height="200" /><figcaption>Nyanbo Yurtze</figcaption></figure>
 

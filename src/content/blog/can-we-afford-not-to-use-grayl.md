@@ -69,6 +69,6 @@ So, why is Grayl GEOPRESS so great?
 
 <b>Where to Buy?</b>
 
-For more information or if you are in China and are interested in purchasing a Grayl GEOPRESS or the Grayl UL Purifier, please <span style="text-decoration: underline;"><a href="https://adventure-access.com/#contact">contact us</a></span> or send us a message on WeChat (<em>AdvAccSongpan</em>).
+For more information or if you are in China and are interested in purchasing a Grayl GEOPRESS or the Grayl UL Purifier, please <span style="text-decoration: underline;"><a href="/#contact">contact us</a></span> or send us a message on WeChat (<em>AdvAccSongpan</em>).
 
 <span style="font-weight: 400;">*The USD references for the GEOPRESS in this post are a conversion on the China Market </span><span style="font-weight: 400;">price, not the price in a US retail store.</span>

@@ -25,6 +25,6 @@ Hike through Shangniba Village and around Shangniba Monastery: 5 km
 
 Return from Shangniba Village to Songpan Old Town: 5 km
 
-Plan your own trip with us in Songpan! Our staff is present in Songpan from June through August. Stop by or you can <a href="https://adventure-access.com/#contact" target="_blank" rel="noopener noreferrer">Contact us</a> now!
+Plan your own trip with us in Songpan! Our staff is present in Songpan from June through August. Stop by or you can <a href="/#contact" target="_blank" rel="noopener noreferrer">Contact us</a> now!
 
 <img class="aligncenter" src="/images/2017/11/Songpan-Branch-Map-North-1024x725-300x212.jpg" alt="" width="739" height="522" />

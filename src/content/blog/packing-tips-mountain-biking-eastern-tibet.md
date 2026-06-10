@@ -7,7 +7,7 @@ featured_image: "/images/2019/07/Hero_Packing-Tips-for-Mountain-Biking-in-Easter
 
 If you're planning on mountain biking in China or <a href="https://www.lonelyplanet.com/china/tibet/travel-tips-and-articles/7-reasons-to-visit-eastern-tibet/40625c8c-8a11-5710-a052-1479d27762f8">Eastern Tibet</a>, we want to help you be prepared.
 
-We’ll start with a few Q&amp;A’s that are helpful for anyone coming to the region and finish off with a few additional answers for those of you who are coming on an Adventure Access <a href="https://adventure-access.com/tour/songpan-mountain-biking-ridge-route/">Mountain Biking experience</a>.
+We’ll start with a few Q&amp;A’s that are helpful for anyone coming to the region and finish off with a few additional answers for those of you who are coming on an Adventure Access <a href="/tours">Mountain Biking experience</a>.
 
 &nbsp;
 
@@ -122,7 +122,7 @@ Here is a full list of recommended items for our Adventure Access clients who wi
 </table>
 &nbsp;
 
-If you’re curious about some of the equipment we use and some of our staff favorites, you can check that out on the <a href="https://adventure-access.com/about/"><span style="color: #ff6600;">About page</span></a> listed under the heading “Our Equipment.”
+If you’re curious about some of the equipment we use and some of our staff favorites, you can check that out on the <a href="/about"><span style="color: #ff6600;">About page</span></a> listed under the heading “Our Equipment.”
 It may also be helpful to view our <a href="/images/2017/11/Seasonal-Temperature-Chart.pdf" target="_blank" rel="noopener"><span style="color: #ff6600;">seasonal temperature chart</span></a> for locations throughout the Amdo region of Eastern Tibet.
 
 &nbsp;

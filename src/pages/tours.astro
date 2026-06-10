@@ -1,5 +1,6 @@
 ---
 import Base from '../layouts/Base.astro';
+import { respSrcset, SIZES_FULL } from '../utils/resp';
 ---
 <Base
   title="Trips — Adventure Access"
@@ -9,7 +10,10 @@ import Base from '../layouts/Base.astro';
   <section class="relative h-[55vh] md:h-[65vh] overflow-hidden bg-ink">
     <img
       src="/images/2025/11/MTB-Exploration-Photo-3-scaled.jpeg"
+      srcset={respSrcset('/images/2025/11/MTB-Exploration-Photo-3-scaled.jpeg')}
+      sizes={SIZES_FULL}
       alt="Mountain biker on a high-altitude trail"
+      fetchpriority="high"
       class="absolute inset-0 w-full h-full object-cover kenburns"
     />
     <div class="absolute inset-0 bg-gradient-to-b from-ink/30 via-ink/10 to-ink/80"></div>

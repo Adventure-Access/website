@@ -8,6 +8,7 @@ const staticUrls = [
   { loc: '/',                                  priority: '1.0', changefreq: 'weekly'  },
   { loc: '/about/',                            priority: '0.7', changefreq: 'monthly' },
   { loc: '/transformational-travel/',          priority: '0.9', changefreq: 'monthly' },
+  { loc: '/destinations/',                     priority: '0.9', changefreq: 'monthly' },
   { loc: '/tours/',                            priority: '0.9', changefreq: 'weekly'  },
   { loc: '/blog/',                             priority: '0.9', changefreq: 'weekly'  },
   { loc: '/privacy-cookie-policy/',            priority: '0.3', changefreq: 'yearly'  },

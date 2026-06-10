@@ -13,7 +13,7 @@ This isn’t so much a comparison as it is an introduction. Many people have nev
 
 <img class="alignnone" src="/images/2020/09/Infographic.jpg" alt="" width="1000" height="1001" />
 
-Key geological formations in Songpan County include<a href="https://adventure-access.com/huanglong-national-park/"> Huanglong National Park</a> and <a href="https://adventure-access.com/muni-valley-zhaga-waterfall/">Muni Valley’s Zhaga Waterfall and Er Dao Lake</a>. There are also travertine pools near Shangsizhai Village in Jiuzhaigou County. It is not uncommon to encounter springs with calcium deposits below them throughout the Huanglong Nature Preserve surrounding Mount Xuebaoding.
+Key geological formations in Songpan County include<a href="/blog/huanglong-national-park"> Huanglong National Park</a> and <a href="/blog/muni-valley-zhaga-waterfall">Muni Valley’s Zhaga Waterfall and Er Dao Lake</a>. There are also travertine pools near Shangsizhai Village in Jiuzhaigou County. It is not uncommon to encounter springs with calcium deposits below them throughout the Huanglong Nature Preserve surrounding Mount Xuebaoding.
 
 <img class="alignnone" src="/images/2020/09/Mount-Xuebaoding.jpg" alt="" width="1000" height="557" />
 

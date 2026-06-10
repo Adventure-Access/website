@@ -1,0 +1,107 @@
+---
+import Base from '../../layouts/Base.astro';
+import destinations from '../../data/destinations.json';
+import { respSrcset, SIZES_FULL } from '../../utils/resp';
+
+// CollectionPage + ItemList JSON-LD
+const listSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'ItemList',
+  name: 'Adventure Access Destinations',
+  itemListElement: (destinations as any[]).map((d, i) => ({
+    '@type': 'ListItem',
+    position: i + 1,
+    name: d.name,
+    url: new URL(`/destinations/${d.slug}/`, Astro.site).toString(),
+  })),
+};
+
+const breadcrumbSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Home', item: new URL('/', Astro.site).toString() },
+    { '@type': 'ListItem', position: 2, name: 'Destinations', item: new URL('/destinations/', Astro.site).toString() },
+  ],
+};
+---
+<Base
+  hideNavBg={true}
+  title="Destinations — Adventure Access"
+  description="Four corners of the Himalayas and the Tibetan Plateau: Ladakh & Zanskar, Nepal, Bhutan, and Yunnan. Explore where Adventure Access can take you."
+  schema={[listSchema, breadcrumbSchema]}
+>
+  <!-- HERO -->
+  <section class="relative h-[55vh] md:h-[65vh] overflow-hidden bg-ink">
+    <img
+      src="/images/2021/04/trekkers-adventure-access.jpg"
+      srcset={respSrcset('/images/2021/04/trekkers-adventure-access.jpg')}
+      sizes={SIZES_FULL}
+      alt="Trekkers traversing a high Himalayan ridge"
+      class="absolute inset-0 w-full h-full object-cover kenburns"
+      fetchpriority="high"
+    />
+    <div class="absolute inset-0 bg-gradient-to-b from-ink/35 via-ink/15 to-ink/80"></div>
+    <div class="relative z-10 h-full max-w-8xl mx-auto px-6 md:px-14 flex flex-col justify-end pb-14 md:pb-20 text-cream">
+      <div class="max-w-3xl">
+        <div class="eyebrow-cream mb-6 fade-up text-shadow-hero">— Destinations · Himalayas & Tibetan Plateau</div>
+        <h1 class="display text-5xl md:text-8xl mb-6 fade-up-delay-1 text-shadow-hero">
+          Four corners of the <em class="not-italic font-light text-saffron font-display italic">high world</em>.
+        </h1>
+        <p class="text-lg md:text-xl text-cream/90 leading-relaxed max-w-2xl fade-up-delay-2 text-shadow-hero">
+          Every region we travel is one our community calls home. Pick a place to see
+          what it's like to experience it with local guides.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- DESTINATION PANELS -->
+  {(destinations as any[]).map((d, i) => (
+    <a
+      href={`/destinations/${d.slug}`}
+      class="group relative block h-[70vh] md:h-[80vh] overflow-hidden bg-ink"
+    >
+      <img
+        src={d.hero}
+        srcset={respSrcset(d.hero)}
+        sizes={SIZES_FULL}
+        alt={d.name}
+        loading="lazy"
+        class="absolute inset-0 w-full h-full object-cover transition-transform duration-[1600ms] ease-out group-hover:scale-[1.05]"
+      />
+      <div class={i % 2 === 0
+        ? 'absolute inset-0 bg-gradient-to-r from-ink/80 via-ink/35 to-ink/10'
+        : 'absolute inset-0 bg-gradient-to-l from-ink/80 via-ink/35 to-ink/10'}></div>
+      <div class="relative z-10 h-full max-w-8xl mx-auto px-6 md:px-14 flex items-end pb-14 md:pb-20 text-cream">
+        <div class={`max-w-xl reveal ${i % 2 === 0 ? '' : 'md:ml-auto md:text-right'}`}>
+          <div class="eyebrow-cream mb-4 text-shadow-hero">— {String(i + 1).padStart(2, '0')} · {d.tagline ?? d.country}</div>
+          <h2 class="display text-5xl md:text-7xl mb-5 text-shadow-hero group-hover:text-saffron transition-colors duration-500">
+            {d.name}
+          </h2>
+          <p class="text-base md:text-lg text-cream/90 leading-relaxed mb-7 text-shadow-hero">{d.blurb}</p>
+          <span class="btn-ghost-cream">Explore {d.name} →</span>
+        </div>
+      </div>
+    </a>
+  ))}
+
+  <!-- CTA -->
+  <section class="bg-ink text-cream py-24 md:py-32 relative overflow-hidden">
+    <div class="absolute top-1/2 left-0 -translate-y-1/2 -translate-x-1/4 select-none pointer-events-none opacity-[0.04] overflow-hidden hidden md:block" aria-hidden="true">
+      <span class="font-display font-light text-[22vw] uppercase whitespace-nowrap">Explore</span>
+    </div>
+    <div class="relative z-10 max-w-4xl mx-auto px-6 md:px-14 text-center reveal">
+      <div class="eyebrow !text-saffron mb-6">— Can't decide?</div>
+      <h2 class="display text-5xl md:text-7xl mb-8">Let us <em class="not-italic font-light text-saffron font-display italic">guide</em> you.</h2>
+      <p class="text-lg text-cream/80 max-w-xl mx-auto mb-10">
+        Tell us what kind of adventure you're after and our travel specialists will
+        point you to the right region — or string a few together.
+      </p>
+      <div class="flex flex-wrap gap-4 justify-center">
+        <a href="/#contact" class="btn !bg-saffron hover:!bg-saffron-dark">Start a Conversation</a>
+        <a href="/tours" class="btn-ghost-cream">Browse bookable trips →</a>
+      </div>
+    </div>
+  </section>
+</Base>

@@ -9,7 +9,7 @@ featured_image: "/images/2020/01/Feature.jpg"
 
 &nbsp;
 
-For starters, it is a good idea to check out our post about traveling to <span style="text-decoration: underline;"><a href="https://adventure-access.com/traveling-to-tibet-in-winter/">Tibet in Winter</a></span>. This will give you a basic idea of what to expect and how to best be prepared before jumping into the details of what to put in your bag.
+For starters, it is a good idea to check out our post about traveling to <span style="text-decoration: underline;"><a href="/blog/traveling-to-tibet-in-winter">Tibet in Winter</a></span>. This will give you a basic idea of what to expect and how to best be prepared before jumping into the details of what to put in your bag.
 
 When the time comes to buy the right clothing or pack what you already own, we’ve reached out to one of our mountain experts to help us show you what we are talking about.
 

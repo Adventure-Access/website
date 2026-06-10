@@ -5,6 +5,7 @@ import DestinationScroller from '../components/DestinationScroller.astro';
 import Testimonials from '../components/Testimonials.astro';
 import destinations from '../data/destinations.json';
 import testimonials from '../data/testimonials.json';
+import { respSrcset, SIZES_FULL, SIZES_HALF } from '../utils/resp';
 
 const heroTestimonial = testimonials.items.find(t => t.heroQuote);
 
@@ -14,7 +15,7 @@ const heroSlides = [
   { src: '/images/2024/05/Bhutan-Hero-Image.jpg',            alt: 'Stone dzong rising above a Bhutanese valley' },
   { src: '/images/2024/05/Nepal-Page-Hero-image-scaled-1.jpeg', alt: 'Snow peaks rising over Nepal' },
   { src: '/images/2024/05/Hero-Image-Lijiang.jpg',           alt: 'Jade Dragon Snow Mountain above Lijiang, Yunnan' },
-];
+].map((s) => ({ ...s, srcset: respSrcset(s.src), sizes: SIZES_FULL }));
 ---
 <Base hideNavBg={true} title="Adventure Access — Real Adventure Changes You" description="Custom adventure tours through the Himalayas and the Tibetan Plateau. Bhutan, India, Nepal, and Yunnan.">
 
@@ -62,6 +63,8 @@ const heroSlides = [
   <section class="relative h-[60vh] md:h-[75vh] overflow-hidden bg-ink">
     <img
       src="/images/2021/04/trekkers-adventure-access.jpg"
+      srcset={respSrcset('/images/2021/04/trekkers-adventure-access.jpg')}
+      sizes={SIZES_FULL}
       alt="Trekkers traversing a high Himalayan ridge"
       class="absolute inset-0 w-full h-full object-cover kenburns"
       loading="lazy"
@@ -122,6 +125,8 @@ const heroSlides = [
       <div class="reveal-left aspect-[4/5] overflow-hidden">
         <img
           src="/images/2023/06/About-Us-General-2-scaled.jpg"
+          srcset={respSrcset('/images/2023/06/About-Us-General-2-scaled.jpg')}
+          sizes="(min-width: 1024px) 42vw, 100vw"
           alt="Adventure Access team and local partners"
           class="w-full h-full object-cover"
           loading="lazy"
@@ -145,6 +150,8 @@ const heroSlides = [
   <section class="relative py-28 md:py-40 overflow-hidden">
     <img
       src="/images/2021/04/thangkha-adventure-access.jpg"
+      srcset={respSrcset('/images/2021/04/thangkha-adventure-access.jpg')}
+      sizes={SIZES_FULL}
       alt=""
       aria-hidden="true"
       class="absolute inset-0 w-full h-full object-cover"
@@ -167,6 +174,8 @@ const heroSlides = [
         <a href="/blog/hidden-mountain-bike-routes-in-ladakh" class="reveal-left group block aspect-[4/3] overflow-hidden bg-cream">
           <img
             src="/images/2025/11/MTB-Exploration-Photo-3-scaled.jpeg"
+            srcset={respSrcset('/images/2025/11/MTB-Exploration-Photo-3-scaled.jpeg')}
+            sizes={SIZES_HALF}
             alt="Mountain biker descending in the Western Himalaya"
             loading="lazy"
             class="w-full h-full object-cover transition-transform duration-[1200ms] group-hover:scale-105"
@@ -191,6 +200,8 @@ const heroSlides = [
   <section id="plan" class="relative overflow-hidden">
     <img
       src="/images/2024/05/Ladakh-hero-image.jpg"
+      srcset={respSrcset('/images/2024/05/Ladakh-hero-image.jpg')}
+      sizes={SIZES_FULL}
       alt=""
       aria-hidden="true"
       class="absolute inset-0 w-full h-full object-cover"

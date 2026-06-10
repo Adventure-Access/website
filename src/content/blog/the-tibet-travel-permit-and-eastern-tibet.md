@@ -25,7 +25,7 @@ featured_image: "/images/2020/01/Eastern-Himalaya-Hiking_featured-image.jpg"
 
 <b>Where is Eastern Tibet? </b>
 
-<span style="font-weight: 400;">The Amdo and Kham regions of the Tibetan Plateau are often referred to as Eastern Tibet. These regions are found in Sichuan, Gansu, Qinghai, and Yunnan Provinces of Western China. Eastern Tibet is home to places such as <span style="text-decoration: underline;"><a href="https://adventure-access.com/destination/xiahe/">Labrang Monastery</a></span></span><span style="font-weight: 400;">, the <span style="text-decoration: underline;"><a href="https://adventure-access.com/destination/tangke/">Zoige Grasslands</a></span></span><span style="font-weight: 400;">,<span style="text-decoration: underline;"><a href="https://adventure-access.com/destination/xuebaoding"> Mt. Xuebaoding</a></span>, Nyanbo Yurtze, <span style="text-decoration: underline;"><a href="https://adventure-access.com/destination/jiuzhaigou-national-park/">Jiuzhaigou</a></span></span><span style="font-weight: 400;"> </span><span style="font-weight: 400;">and <a href="https://adventure-access.com/destination/huanglong-national-park"><span style="text-decoration: underline;">Huanglong</span></a></span><span style="font-weight: 400;"> </span><span style="font-weight: 400;">National Parks, and Serta Monastery. </span>
+<span style="font-weight: 400;">The Amdo and Kham regions of the Tibetan Plateau are often referred to as Eastern Tibet. These regions are found in Sichuan, Gansu, Qinghai, and Yunnan Provinces of Western China. Eastern Tibet is home to places such as <span style="text-decoration: underline;">Labrang Monastery</span></span><span style="font-weight: 400;">, the <span style="text-decoration: underline;">Zoige Grasslands</span></span><span style="font-weight: 400;">,<span style="text-decoration: underline;"><a href="/blog/a-hike-up-mt-xiao-xue-bao-ding"> Mt. Xuebaoding</a></span>, Nyanbo Yurtze, <span style="text-decoration: underline;"><a href="/blog/jiuzhaigou-national-park">Jiuzhaigou</a></span></span><span style="font-weight: 400;"> </span><span style="font-weight: 400;">and <a href="/blog/huanglong-national-park"><span style="text-decoration: underline;">Huanglong</span></a></span><span style="font-weight: 400;"> </span><span style="font-weight: 400;">National Parks, and Serta Monastery. </span>
 
 <b>What is the Tibet Travel Permit? </b>
 
@@ -49,7 +49,7 @@ featured_image: "/images/2020/01/Eastern-Himalaya-Hiking_featured-image.jpg"
 
 &nbsp;
 
-<span style="font-weight: 400;">We hope this short question and answer format has helped clear up some of the key issues you face as you choose a Tibetan destination. If you have other questions, please do not hesitate to use the live chat feature on our site or fill out a <a href="https://adventure-access.com/#contact"><span style="text-decoration: underline;">contact us form</span></a>. We are here to help!</span>
+<span style="font-weight: 400;">We hope this short question and answer format has helped clear up some of the key issues you face as you choose a Tibetan destination. If you have other questions, please do not hesitate to use the live chat feature on our site or fill out a <a href="/#contact"><span style="text-decoration: underline;">contact us form</span></a>. We are here to help!</span>
 
 &nbsp;
 

@@ -15,11 +15,11 @@ featured_image: "/images/2021/08/jiuzhaigou-hero-image.jpg"
 <h2><b>UNESCO World Heritage Sites in Sichuan: </b></h2>
 <img class="aligncenter" src="/images/2021/08/jiuzhaigou-1024x683.jpg" alt="jiuzhaigou" width="1024" height="683" />
 
-<span style="font-weight: 400;">Jiuzhaigou Valley Scenic and Historic Interest Area - </span><span style="font-weight: 400;">Adventure Access <a href="https://adventure-access.com/destination/jiuzhaigou/">tours available</a></span><span style="font-weight: 400;">.</span>
+<span style="font-weight: 400;">Jiuzhaigou Valley Scenic and Historic Interest Area - </span><span style="font-weight: 400;">Adventure Access <a href="/blog/jiuzhaigou-national-park">tours available</a></span><span style="font-weight: 400;">.</span>
 
 <img class="aligncenter" src="/images/2021/08/huanglong-1024x768.jpg" alt="huanglong adventure access" width="1024" height="768" />
 
-<span style="font-weight: 400;">Huanglong Scenic and Historic Interest Area - </span><span style="font-weight: 400;">Adventure Access <a href="https://adventure-access.com/destinations/">tours available</a>.</span>
+<span style="font-weight: 400;">Huanglong Scenic and Historic Interest Area - </span><span style="font-weight: 400;">Adventure Access <a href="/destinations">tours available</a>.</span>
 
 <img class="aligncenter" src="/images/2021/08/panda-adventure-access-1024x683.jpg" alt="panda adventure access" width="1024" height="683" />
 

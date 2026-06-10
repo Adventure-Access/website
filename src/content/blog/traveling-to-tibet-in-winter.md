@@ -93,6 +93,6 @@ Traveling on the Tibetan Plateau in winter is not as formidable as you may think
  	<li><span style="font-weight: 400;"> Sun glasses to help limit UV exposure in snowy or high altitude conditions</span></li>
  	<li><span style="font-weight: 400;"> A Nalgene bottle for drinking water during the day and for filling with warm water to help keep you warm at night</span></li>
 </ol>
-<span style="font-weight: 400;">For a complete packing list for winter visits to the region, please click </span><span style="text-decoration: underline;"><a href="https://adventure-access.com/packing-for-a-winter-trip-to-eastern-tibet/" target="_blank" rel="noopener noreferrer"><span style="font-weight: 400;">here</span></a></span><span style="font-weight: 400;">.</span>
+<span style="font-weight: 400;">For a complete packing list for winter visits to the region, please click </span><span style="text-decoration: underline;"><a href="/blog/packing-for-a-winter-trip-to-eastern-tibet" target="_blank" rel="noopener noreferrer"><span style="font-weight: 400;">here</span></a></span><span style="font-weight: 400;">.</span>
 
 <span style="font-weight: 400;">With proper knowledge, a good plan, and the right clothing, you can have a good travel </span><span style="font-weight: 400;">experience throughout the Tibetan region all year long.</span>

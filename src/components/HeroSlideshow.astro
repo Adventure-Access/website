@@ -8,6 +8,9 @@
 export interface Slide {
   src: string;
   alt: string;
+  /** Optional responsive srcset (see src/utils/resp.ts). */
+  srcset?: string;
+  sizes?: string;
 }
 export interface Props {
   slides: Slide[];
@@ -22,6 +25,8 @@ const { slides, duration = 6500, showDots = true } = Astro.props;
   {slides.map((slide, i) => (
     <img
       src={slide.src}
+      srcset={slide.srcset}
+      sizes={slide.srcset ? (slide.sizes ?? '100vw') : undefined}
       alt={slide.alt}
       class:list={[
         'slideshow-img absolute inset-0 w-full h-full object-cover',
