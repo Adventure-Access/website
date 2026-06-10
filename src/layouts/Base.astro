@@ -97,34 +97,37 @@ const allSchemas = [orgSchema, ...extraSchemas];
       <script type="application/ld+json" set:html={JSON.stringify(s)}></script>
     ))}
 
-    <!-- Netlify Identity (required for Decap CMS login redirect) -->
-    <!-- is:inline prevents Astro from bundling these — they must run as plain scripts -->
-    <script is:inline src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+    <!-- Netlify Identity (required for Decap CMS login redirect).
+         Loaded ONLY when an invite/recovery/confirmation token is in the URL hash —
+         that's the one case where a public page needs the widget. /admin loads its
+         own copy. This keeps ~70KB of JS off normal page views. -->
     <script is:inline>
-      // Open the Identity widget automatically when an invite, recovery,
-      // or email-confirmation token is present in the URL hash.
-      if (window.netlifyIdentity) {
-        window.netlifyIdentity.on('init', function(user) {
-          // Auto-open the modal AFTER the widget has fully initialized
-          var hash = window.location.hash;
-          if (
-            hash.indexOf('invite_token=') !== -1 ||
-            hash.indexOf('recovery_token=') !== -1 ||
-            hash.indexOf('confirmation_token=') !== -1
-          ) {
-            window.netlifyIdentity.open();
-          }
-          if (!user) {
-            window.netlifyIdentity.on('login', function() {
-              document.location.href = '/admin/';
-            });
-          }
-        });
-      }
-    </script>
+      (function () {
+        var hash = window.location.hash;
+        if (
+          hash.indexOf('invite_token=') === -1 &&
+          hash.indexOf('recovery_token=') === -1 &&
+          hash.indexOf('confirmation_token=') === -1
+        ) return;
 
-    <!-- Trustpilot TrustBox -->
-    <script type="text/javascript" src="//widget.trustpilot.com/bootstrap/v5/tp.widget.bootstrap.min.js" async></script>
+        var s = document.createElement('script');
+        s.src = 'https://identity.netlify.com/v1/netlify-identity-widget.js';
+        s.onload = function () {
+          if (!window.netlifyIdentity) return;
+          window.netlifyIdentity.on('init', function (user) {
+            // Auto-open the modal AFTER the widget has fully initialized
+            window.netlifyIdentity.open();
+            if (!user) {
+              window.netlifyIdentity.on('login', function () {
+                document.location.href = '/admin/';
+              });
+            }
+          });
+          window.netlifyIdentity.init();
+        };
+        document.head.appendChild(s);
+      })();
+    </script>
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />

@@ -73,17 +73,45 @@ const breadcrumbSchema = {
     </div>
   </section>
 
-  <!-- TRIPS IN THIS REGION — link out to /tours, where the Youli widget lists every active trip -->
+  <!-- TRIPS IN THIS REGION — Youli embed filtered by this destination's tag -->
   <section class="bg-paper py-24 md:py-32">
-    <div class="max-w-4xl mx-auto px-6 md:px-14 text-center">
-      <div class="eyebrow mb-4">— Bookable Trips</div>
-      <h2 class="display text-4xl md:text-5xl mb-6">See every journey we're running in <em class="not-italic font-light text-saffron font-display italic">{dest.country}</em>.</h2>
-      <p class="text-lg text-ink-soft max-w-xl mx-auto mb-10">
-        Browse current itineraries with dates, prices, and direct booking.
-      </p>
-      <a href="/tours" class="btn">View All Trips</a>
+    <div class="max-w-8xl mx-auto px-6 md:px-14">
+      <div class="flex flex-wrap justify-between items-end gap-6 mb-12">
+        <div>
+          <div class="eyebrow mb-4">— Bookable Trips</div>
+          <h2 class="display text-4xl md:text-5xl">Journeys in <em class="not-italic font-light text-saffron font-display italic">{dest.name}</em>.</h2>
+        </div>
+        <a href="/tours" class="btn-ghost">View all trips →</a>
+      </div>
+      <div
+        class="youli-embed youli-tagged"
+        data-youli-tag={(dest as any).youliTag}
+        data-youli-empty-note={`No scheduled departures in ${dest.name} right now — but every trip we run can be built custom.`}
+      ></div>
     </div>
   </section>
+
+  <script is:inline>
+    (function () {
+      var mount = document.querySelector('.youli-tagged');
+      if (!mount) return;
+      var tag = mount.dataset.youliTag;
+      var s = document.createElement('script');
+      s.src = 'https://youli.io/embeds/script/trips/adventure-access/?view=card&style=detailed&tags=' + encodeURIComponent(tag);
+      s.onload = function () {
+        // If Youli rendered nothing for this tag, show a friendly note instead of a blank box.
+        setTimeout(function () {
+          if (!mount.querySelector('.trip-card-wrapper') && mount.children.length <= 1) {
+            var p = document.createElement('p');
+            p.className = 'text-ink-soft text-lg';
+            p.textContent = mount.dataset.youliEmptyNote || 'No scheduled departures right now.';
+            mount.appendChild(p);
+          }
+        }, 1500);
+      };
+      mount.appendChild(s);
+    })();
+  </script>
 
   <!-- GALLERY -->
   {dest.gallery && dest.gallery.length > 0 && (
@@ -110,7 +138,7 @@ const breadcrumbSchema = {
       <p class="text-lg text-cream/80 max-w-xl mx-auto mb-10">
         Tell us what experiences speak to you, and one of our travel specialists will design a journey shaped specifically for your group.
       </p>
-      <a href="/#contact" class="btn !bg-saffron hover:!bg-saffron-dark">Start a Conversation</a>
+      <a href="/plan" class="btn !bg-saffron hover:!bg-saffron-dark">Plan a Journey</a>
     </div>
   </section>
 </Base>

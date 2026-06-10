@@ -1,0 +1,331 @@
+---
+import Base from '../layouts/Base.astro';
+---
+<Base
+  title="Plan a Journey — Adventure Access"
+  description="Answer a few questions about your group, your dates, and what you want from the mountains — and a travel specialist will design a journey shaped for you."
+>
+  <!-- HERO -->
+  <section class="relative h-[46vh] md:h-[56vh] overflow-hidden bg-ink">
+    <img
+      src="/images/2024/05/Ladakh-hero-image.jpg"
+      alt="High Himalayan valley in Ladakh"
+      class="absolute inset-0 w-full h-full object-cover kenburns"
+    />
+    <div class="absolute inset-0 bg-gradient-to-b from-ink/30 via-ink/20 to-ink/90"></div>
+    <div class="relative z-10 h-full max-w-8xl mx-auto px-6 md:px-14 flex flex-col justify-end pb-12 md:pb-16 text-cream">
+      <div class="max-w-3xl">
+        <div class="eyebrow-cream mb-5 fade-up text-shadow-hero">— Plan a Journey</div>
+        <h1 class="display text-5xl md:text-7xl fade-up-delay-1 text-shadow-hero">
+          Tell us about<br>your <em class="not-italic font-light text-saffron font-display italic">trip</em>.
+        </h1>
+      </div>
+    </div>
+  </section>
+
+  <!-- WIZARD -->
+  <section class="bg-ink text-cream py-16 md:py-24">
+    <div class="max-w-3xl mx-auto px-6 md:px-10">
+      <p class="text-cream/80 text-lg leading-relaxed mb-10">
+        Five short questions — about two minutes. A travel specialist reads every answer
+        and replies within 24 hours with first thoughts on a journey built around you.
+      </p>
+
+      <!-- Progress -->
+      <div class="mb-10">
+        <div class="flex justify-between text-xs uppercase tracking-[0.15em] text-cream/50 mb-3">
+          <span id="step-label">Step 1 of 5 — Your group</span>
+          <span id="step-count">1 / 5</span>
+        </div>
+        <div class="h-px bg-cream/20">
+          <div id="progress-bar" class="h-px bg-saffron transition-all duration-500" style="width: 20%"></div>
+        </div>
+      </div>
+
+      <form
+        id="journey-form"
+        name="journey-planner"
+        method="POST"
+        action="/thank-you/"
+        data-netlify="true"
+        netlify-honeypot="bot-field"
+        novalidate
+      >
+        <input type="hidden" name="form-name" value="journey-planner" />
+        <p class="hidden">
+          <label>Don't fill this out if you're human: <input name="bot-field" /></label>
+        </p>
+
+        <!-- STEP 1 — Who's traveling -->
+        <fieldset class="wizard-step" data-step="1" data-label="Your group">
+          <legend class="display text-3xl md:text-4xl mb-8">Who's <em class="not-italic font-light text-saffron font-display italic">traveling</em>?</legend>
+
+          <div class="mb-8">
+            <div class="eyebrow !text-cream/60 mb-4">Group type</div>
+            <div class="grid grid-cols-2 md:grid-cols-3 gap-3">
+              {['Just me', 'A couple', 'Family with kids', 'Friends', 'Larger group / club'].map((g) => (
+                <label class="choice-card">
+                  <input type="radio" name="group-type" value={g} class="sr-only" />
+                  <span>{g}</span>
+                </label>
+              ))}
+            </div>
+          </div>
+
+          <div class="max-w-xs">
+            <label class="block eyebrow !text-cream/60 mb-2" for="group-size">How many people?</label>
+            <input id="group-size" name="group-size" type="number" min="1" max="40" inputmode="numeric"
+              class="w-full bg-transparent border-b border-cream/30 py-2 text-cream text-lg focus:outline-none focus:border-saffron transition-colors" placeholder="2" />
+          </div>
+        </fieldset>
+
+        <!-- STEP 2 — When -->
+        <fieldset class="wizard-step hidden" data-step="2" data-label="Timing">
+          <legend class="display text-3xl md:text-4xl mb-8">When do you want <em class="not-italic font-light text-saffron font-display italic">to go</em>?</legend>
+
+          <div class="grid md:grid-cols-2 gap-8 mb-8">
+            <div>
+              <label class="block eyebrow !text-cream/60 mb-2" for="travel-window">Rough timeframe</label>
+              <input id="travel-window" name="travel-window" type="text"
+                class="w-full bg-transparent border-b border-cream/30 py-2 text-cream focus:outline-none focus:border-saffron transition-colors"
+                placeholder="e.g. September 2026, or next spring" />
+            </div>
+            <div>
+              <label class="block eyebrow !text-cream/60 mb-2" for="trip-length">Trip length</label>
+              <select id="trip-length" name="trip-length"
+                class="w-full bg-transparent border-b border-cream/30 py-2 text-cream focus:outline-none focus:border-saffron">
+                <option class="text-ink" value="">Select…</option>
+                <option class="text-ink">Under a week</option>
+                <option class="text-ink">7–10 days</option>
+                <option class="text-ink">11–14 days</option>
+                <option class="text-ink">2–3 weeks</option>
+                <option class="text-ink">A month or more</option>
+              </select>
+            </div>
+          </div>
+
+          <div>
+            <div class="eyebrow !text-cream/60 mb-4">How fixed are your dates?</div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+              {['Dates are set', 'Flexible by a few weeks', 'Completely open'].map((f) => (
+                <label class="choice-card">
+                  <input type="radio" name="date-flexibility" value={f} class="sr-only" />
+                  <span>{f}</span>
+                </label>
+              ))}
+            </div>
+          </div>
+        </fieldset>
+
+        <!-- STEP 3 — What you want to do -->
+        <fieldset class="wizard-step hidden" data-step="3" data-label="The adventure">
+          <legend class="display text-3xl md:text-4xl mb-3">What do you want <em class="not-italic font-light text-saffron font-display italic">to do</em>?</legend>
+          <p class="text-cream/60 text-sm mb-8">Choose as many as you like.</p>
+
+          <div class="grid grid-cols-2 md:grid-cols-3 gap-3 mb-10">
+            {['Trekking / hiking', 'Mountain biking', 'Monasteries & culture', 'Homestays & local food', 'Overland road journey', 'National parks & wildlife', 'Photography', 'Not sure — surprise us'].map((a) => (
+              <label class="choice-card">
+                <input type="checkbox" name="activities" value={a} class="sr-only" />
+                <span>{a}</span>
+              </label>
+            ))}
+          </div>
+
+          <div>
+            <div class="eyebrow !text-cream/60 mb-4">Anywhere in particular?</div>
+            <div class="grid grid-cols-2 md:grid-cols-3 gap-3">
+              {['Ladakh, India', 'Nepal', 'Bhutan', 'Yunnan, China', 'Open to suggestions'].map((r) => (
+                <label class="choice-card">
+                  <input type="checkbox" name="regions" value={r} class="sr-only" />
+                  <span>{r}</span>
+                </label>
+              ))}
+            </div>
+          </div>
+        </fieldset>
+
+        <!-- STEP 4 — Limits & comfort -->
+        <fieldset class="wizard-step hidden" data-step="4" data-label="Comfort & limits">
+          <legend class="display text-3xl md:text-4xl mb-3">Anything we should <em class="not-italic font-light text-saffron font-display italic">work around</em>?</legend>
+          <p class="text-cream/60 text-sm mb-8">This helps us pace the journey honestly. Choose any that apply — or none.</p>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-3 mb-8">
+            {['Cautious about high altitude', 'No long hiking days', 'Prefer not to camp', 'Limit long drives', 'Mobility considerations', 'Dietary requirements', 'Traveling with young children', 'First time in the region'].map((c) => (
+              <label class="choice-card">
+                <input type="checkbox" name="constraints" value={c} class="sr-only" />
+                <span>{c}</span>
+              </label>
+            ))}
+          </div>
+
+          <div class="mb-8">
+            <div class="eyebrow !text-cream/60 mb-4">Where do you like to sleep?</div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+              {['Camping is part of it', 'Simple & local — guesthouses, homestays', 'Comfortable hotels where possible'].map((s) => (
+                <label class="choice-card">
+                  <input type="radio" name="comfort-level" value={s} class="sr-only" />
+                  <span>{s}</span>
+                </label>
+              ))}
+            </div>
+          </div>
+
+          <div>
+            <label class="block eyebrow !text-cream/60 mb-2" for="constraints-notes">Anything else we should know? <span class="text-cream/40 normal-case tracking-normal">(optional)</span></label>
+            <textarea id="constraints-notes" name="constraints-notes" rows="3"
+              class="w-full bg-transparent border-b border-cream/30 py-2 text-cream placeholder:text-cream/40 focus:outline-none focus:border-saffron transition-colors resize-none"
+              placeholder="Health notes, fears, must-haves, deal-breakers…"></textarea>
+          </div>
+        </fieldset>
+
+        <!-- STEP 5 — Contact + review -->
+        <fieldset class="wizard-step hidden" data-step="5" data-label="Almost there">
+          <legend class="display text-3xl md:text-4xl mb-8">Where should we send our <em class="not-italic font-light text-saffron font-display italic">ideas</em>?</legend>
+
+          <div id="trip-summary" class="border border-cream/20 px-6 py-5 mb-10 text-sm leading-relaxed text-cream/80"></div>
+
+          <div class="grid md:grid-cols-2 gap-8 mb-8">
+            <div>
+              <label class="block eyebrow !text-cream/60 mb-2" for="name">Your name</label>
+              <input id="name" name="name" required type="text"
+                class="w-full bg-transparent border-b border-cream/30 py-2 text-cream focus:outline-none focus:border-saffron transition-colors" />
+            </div>
+            <div>
+              <label class="block eyebrow !text-cream/60 mb-2" for="email">Email</label>
+              <input id="email" name="email" required type="email"
+                class="w-full bg-transparent border-b border-cream/30 py-2 text-cream focus:outline-none focus:border-saffron transition-colors" />
+            </div>
+          </div>
+
+          <div>
+            <label class="block eyebrow !text-cream/60 mb-2" for="message">A few words in your own voice <span class="text-cream/40 normal-case tracking-normal">(optional)</span></label>
+            <textarea id="message" name="message" rows="3"
+              class="w-full bg-transparent border-b border-cream/30 py-2 text-cream placeholder:text-cream/40 focus:outline-none focus:border-saffron transition-colors resize-none"
+              placeholder="What does a perfect day on this trip look like?"></textarea>
+          </div>
+        </fieldset>
+
+        <!-- Error -->
+        <p id="step-error" class="hidden text-saffron text-sm mt-6" role="alert"></p>
+
+        <!-- Controls -->
+        <div class="flex items-center justify-between mt-12 pt-8 border-t border-cream/15">
+          <button type="button" id="btn-back" class="btn-ghost-cream invisible">← Back</button>
+          <button type="button" id="btn-next" class="btn !bg-saffron hover:!bg-saffron-dark">Next →</button>
+          <button type="submit" id="btn-submit" class="btn !bg-saffron hover:!bg-saffron-dark hidden">Send to a Specialist</button>
+        </div>
+      </form>
+
+      <p class="text-cream/50 text-sm mt-10">
+        Prefer to just write? Email us anytime at
+        <a href="mailto:info@adventure-access.com" class="text-saffron border-b border-saffron/40 hover:border-saffron">info@adventure-access.com</a>.
+      </p>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .choice-card {
+    @apply block cursor-pointer border border-cream/25 px-4 py-3 text-sm text-cream/80
+      transition-colors duration-200 hover:border-saffron/70 hover:text-cream select-none;
+  }
+  .choice-card:has(input:checked) {
+    @apply border-saffron bg-saffron/15 text-cream;
+  }
+  .choice-card:has(input:focus-visible) {
+    outline: 2px solid theme('colors.saffron');
+    outline-offset: 2px;
+  }
+</style>
+
+<script is:inline>
+  (function () {
+    const form = document.getElementById('journey-form');
+    if (!form) return;
+
+    const steps = Array.from(form.querySelectorAll('.wizard-step'));
+    const bar = document.getElementById('progress-bar');
+    const label = document.getElementById('step-label');
+    const count = document.getElementById('step-count');
+    const back = document.getElementById('btn-back');
+    const next = document.getElementById('btn-next');
+    const submit = document.getElementById('btn-submit');
+    const errorEl = document.getElementById('step-error');
+    const summaryEl = document.getElementById('trip-summary');
+    const total = steps.length;
+    let current = 0;
+
+    function val(name) {
+      const els = form.querySelectorAll(`[name="${name}"]`);
+      const out = [];
+      els.forEach((el) => {
+        if (el.type === 'radio' || el.type === 'checkbox') {
+          if (el.checked) out.push(el.value);
+        } else if (el.value.trim()) {
+          out.push(el.value.trim());
+        }
+      });
+      return out.join(', ');
+    }
+
+    function buildSummary() {
+      const rows = [
+        ['Group', [val('group-type'), val('group-size') && val('group-size') + ' people'].filter(Boolean).join(' · ')],
+        ['When', [val('travel-window'), val('trip-length'), val('date-flexibility')].filter(Boolean).join(' · ')],
+        ['Doing', val('activities')],
+        ['Where', val('regions')],
+        ['Working around', [val('constraints'), val('constraints-notes')].filter(Boolean).join(' · ')],
+        ['Sleeping', val('comfort-level')],
+      ].filter((r) => r[1]);
+      summaryEl.innerHTML = rows.length
+        ? rows.map((r) => `<div class="flex gap-3 py-1"><span class="text-saffron uppercase tracking-[0.12em] text-xs pt-0.5 w-28 shrink-0">${r[0]}</span><span>${r[1]}</span></div>`).join('')
+        : '<span class="text-cream/50">You skipped everything — that\'s fine, just tell us a little below.</span>';
+    }
+
+    function show(i) {
+      current = i;
+      steps.forEach((s, idx) => s.classList.toggle('hidden', idx !== i));
+      const pct = ((i + 1) / total) * 100;
+      bar.style.width = pct + '%';
+      label.textContent = `Step ${i + 1} of ${total} — ${steps[i].dataset.label}`;
+      count.textContent = `${i + 1} / ${total}`;
+      back.classList.toggle('invisible', i === 0);
+      next.classList.toggle('hidden', i === total - 1);
+      submit.classList.toggle('hidden', i !== total - 1);
+      errorEl.classList.add('hidden');
+      if (i === total - 1) buildSummary();
+      form.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    function fail(msg) {
+      errorEl.textContent = msg;
+      errorEl.classList.remove('hidden');
+      return false;
+    }
+
+    function validateStep(i) {
+      errorEl.classList.add('hidden');
+      if (i === 0 && !val('group-type')) return fail('Tell us who\'s coming — pick a group type.');
+      if (i === 1 && !val('travel-window') && !val('date-flexibility'))
+        return fail('Give us a rough timeframe, or tell us your dates are open.');
+      if (i === 2 && !val('activities')) return fail('Pick at least one — "surprise us" counts.');
+      return true;
+    }
+
+    back.addEventListener('click', () => show(Math.max(0, current - 1)));
+    next.addEventListener('click', () => {
+      if (validateStep(current)) show(Math.min(total - 1, current + 1));
+    });
+
+    form.addEventListener('submit', (e) => {
+      const name = form.querySelector('#name');
+      const email = form.querySelector('#email');
+      if (!name.value.trim() || !email.value.trim() || !email.checkValidity()) {
+        e.preventDefault();
+        fail('We need a name and a working email to reply.');
+      }
+    });
+
+    show(0);
+  })();
+</script>

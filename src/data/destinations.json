@@ -36,7 +36,8 @@
       "/images/2025/11/PXL_20250707_105830934-1920x900.jpeg",
       "/images/2024/05/IMG_2802-1920x900.jpg",
       "/images/2024/05/IMG_4944-1-1920x900.jpg"
-    ]
+    ],
+    "youliTag": "Ladakh"
   },
   {
     "slug": "nepal",
@@ -68,7 +69,8 @@
       "/images/2023/12/napal-slider04.jpg",
       "/images/2023/12/napal-slider05.jpg",
       "/images/2023/12/napal-slider07.jpg"
-    ]
+    ],
+    "youliTag": "nepal"
   },
   {
     "slug": "bhutan",
@@ -105,7 +107,8 @@
       "/images/2024/03/bhutan05.jpg",
       "/images/2024/03/bhutan06.jpg",
       "/images/2024/03/bhutan07.jpg"
-    ]
+    ],
+    "youliTag": "Bhutan"
   },
   {
     "slug": "yunnan",
@@ -146,6 +149,7 @@
       "/images/2020/10/IMG_5084-1920x900.jpg",
       "/images/2020/10/IMG_8242-1920x900.jpg",
       "/images/2020/10/IMG_8717-1920x900.jpg"
-    ]
+    ],
+    "youliTag": "Yunnan"
   }
 ]

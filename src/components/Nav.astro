@@ -2,19 +2,18 @@
 export interface Props { transparent?: boolean; }
 const { transparent = false } = Astro.props;
 const navClass = transparent
-  ? 'absolute inset-x-0 top-0 z-50 text-cream'
-  : 'sticky top-0 z-50 bg-cream/95 backdrop-blur border-b border-ink/10 text-ink';
+  ? 'site-nav absolute inset-x-0 top-0 z-50 text-cream'
+  : 'site-nav sticky top-0 z-50 bg-cream/95 backdrop-blur border-b border-ink/10 text-ink';
 
 const links = [
   { href: '/destinations',            label: 'Destinations' },
-  { href: '/tours',                   label: 'Trips' },
-  { href: '/transformational-travel', label: 'Transformation' },
+  { href: '/tours',                   label: 'Book a Trip' },
   { href: '/about',                   label: 'About' },
   { href: '/blog',                    label: 'Journal' },
   { href: 'https://adventureprovisionco.com/', label: 'Gear', external: true },
 ];
 ---
-<header class={navClass}>
+<header class={navClass} data-nav data-transparent={transparent ? 'true' : undefined}>
   <div class="max-w-8xl mx-auto px-6 md:px-14 py-6 flex items-center justify-between">
     <a href="/" class="font-display text-2xl font-semibold tracking-tight flex items-center gap-1">
       Adventure<span class="text-saffron">·</span>Access
@@ -31,9 +30,9 @@ const links = [
           {l.label}
         </a>
       ))}
-      <a href="/#contact" class={transparent
-        ? "bg-cream text-ink px-5 py-2.5 text-xs uppercase tracking-[0.1em] font-semibold hover:bg-saffron hover:text-cream transition-colors"
-        : "btn"}>Plan a Trip</a>
+      <a href="/plan" class={transparent
+        ? "nav-cta-hero bg-cream text-ink px-5 py-2.5 text-xs uppercase tracking-[0.1em] font-semibold hover:bg-saffron hover:text-cream transition-colors"
+        : "btn"}>Plan a Journey</a>
     </nav>
 
     <button
@@ -82,7 +81,7 @@ const links = [
           {l.label}
         </a>
       ))}
-      <a href="/#contact" class="nav-drawer__item btn mt-6 w-fit">Plan a Trip</a>
+      <a href="/plan" class="nav-drawer__item btn mt-6 w-fit">Plan a Journey</a>
     </nav>
   </div>
 </div>
@@ -127,5 +126,56 @@ const links = [
     document.addEventListener('keydown', (e) => {
       if (e.key === 'Escape' && drawer.classList.contains('is-open')) close();
     });
+  })();
+</script>
+
+<script is:inline>
+  // Smart header: hides as you scroll down, reappears the moment you scroll up.
+  // On hero pages (transparent nav) it also swaps to a solid cream bar once
+  // it's detached from the top, so it stays legible over any content.
+  (function () {
+    const nav = document.querySelector('[data-nav]');
+    if (!nav) return;
+    const isHero = nav.dataset.transparent === 'true';
+    const navH = () => nav.offsetHeight;
+
+    let lastY = window.scrollY;
+    let ticking = false;
+
+    function onScroll() {
+      const y = window.scrollY;
+      const goingDown = y > lastY;
+
+      if (isHero) {
+        if (y > navH() + 40) {
+          // Past the hero top: solid fixed bar. Suppress the slide transition
+          // the moment we switch modes so it doesn't flash mid-page.
+          if (!nav.classList.contains('nav-fixed')) {
+            nav.classList.add('nav-no-transition', 'nav-fixed', 'nav-hidden');
+            void nav.offsetHeight; // force reflow
+            nav.classList.remove('nav-no-transition');
+          }
+        } else if (y <= 10) {
+          nav.classList.add('nav-no-transition');
+          nav.classList.remove('nav-fixed', 'nav-hidden');
+          void nav.offsetHeight;
+          nav.classList.remove('nav-no-transition');
+        }
+        if (nav.classList.contains('nav-fixed')) {
+          nav.classList.toggle('nav-hidden', goingDown);
+        }
+      } else {
+        // Sticky cream nav: simply hide/show by direction once scrolled a bit.
+        if (y <= navH()) nav.classList.remove('nav-hidden');
+        else nav.classList.toggle('nav-hidden', goingDown);
+      }
+
+      lastY = y;
+      ticking = false;
+    }
+
+    window.addEventListener('scroll', function () {
+      if (!ticking) { ticking = true; requestAnimationFrame(onScroll); }
+    }, { passive: true });
   })();
 </script>

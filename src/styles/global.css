@@ -246,3 +246,39 @@
     text-shadow: 0 2px 24px rgba(15, 18, 24, 0.5), 0 1px 3px rgba(15, 18, 24, 0.6);
   }
 }
+
+/* ---- Youli embed (shared by /tours and destination pages) ---- */
+.youli-embed { min-height: 200px; }
+.youli-embed iframe,
+.youli-embed > div { max-width: 100%; }
+
+/* ---- Smart header (hide on scroll down, reveal on scroll up) ---- */
+.site-nav {
+  transition: transform 0.35s ease;
+}
+.site-nav.nav-no-transition {
+  transition: none;
+}
+.site-nav.nav-hidden {
+  transform: translateY(-100%);
+}
+/* Hero pages: once detached from the top, the transparent nav becomes a solid bar */
+.site-nav.nav-fixed {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  background: rgba(245, 241, 234, 0.95); /* cream */
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid rgba(43, 53, 64, 0.1);
+  color: #2b3540; /* ink */
+}
+.site-nav.nav-fixed .nav-cta-hero {
+  background: #2b3540;
+  color: #f5f1ea;
+}
+.site-nav.nav-fixed .nav-cta-hero:hover {
+  background: #d97a2c; /* saffron */
+  color: #f5f1ea;
+}

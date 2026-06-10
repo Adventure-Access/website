@@ -30,24 +30,66 @@ import { respSrcset, SIZES_FULL } from '../utils/resp';
     </div>
   </section>
 
-  <!-- YOULI EMBED -->
-  <section class="py-16 md:py-24 bg-cream">
-    <div class="max-w-8xl mx-auto px-6 md:px-14 reveal">
-      <div id="youli-embed-mount" class="youli-embed">
-        <script
-          is:inline
-          src="https://youli.io/embeds/script/trips/adventure-access/?view=card&style=detailed"
-        ></script>
+  <!-- YOULI EMBEDS — grouped by tag, featured first.
+       To add/remove/reorder a group, edit the tripGroups array below.
+       Tags are managed per-trip in the Youli dashboard (Trip Settings → Tags). -->
+  {[
+    { tag: 'featured',        eyebrow: 'Start here',     title: 'Featured adventures',  dark: true  },
+    { tag: 'Ladakh',          eyebrow: 'India',          title: 'Ladakh & Zanskar',     dark: false },
+    { tag: 'nepal',           eyebrow: 'Nepal',          title: 'Nepal',                dark: false },
+    { tag: 'Bhutan',          eyebrow: 'Bhutan',         title: 'Bhutan',               dark: false },
+    { tag: 'Mountain Biking', eyebrow: 'By discipline',  title: 'Mountain biking',      dark: false },
+  ].map((g, i) => (
+    <section class={`youli-group py-14 md:py-20 ${i % 2 === 0 ? 'bg-cream' : 'bg-paper'}`} data-youli-tag={g.tag}>
+      <div class="max-w-8xl mx-auto px-6 md:px-14">
+        <div class="mb-10 reveal">
+          <div class="eyebrow mb-3">— {g.eyebrow}</div>
+          <h2 class="display text-4xl md:text-5xl">{g.title}</h2>
+        </div>
+        <div class="youli-embed youli-group-mount"></div>
       </div>
-      <noscript>
-        <p class="text-center text-ink-soft py-12">
-          Our trip list is hosted on Youli. Please
-          <a href="https://youli.io/trips/adventure-access/" class="text-saffron underline" target="_blank" rel="noopener">view our trips directly</a>
-          if you have JavaScript disabled.
-        </p>
-      </noscript>
-    </div>
-  </section>
+    </section>
+  ))}
+
+  <noscript>
+    <p class="text-center text-ink-soft py-12">
+      Our trip list is hosted on Youli. Please
+      <a href="https://youli.io/trips/adventure-access/" class="text-saffron underline" target="_blank" rel="noopener">view our trips directly</a>
+      if you have JavaScript disabled.
+    </p>
+  </noscript>
+
+  <script is:inline>
+    (function () {
+      var groups = Array.from(document.querySelectorAll('.youli-group'));
+      var BASE = 'https://youli.io/embeds/script/trips/adventure-access/?view=card&style=detailed&tags=';
+
+      // Load groups one at a time — the Youli embed script renders into the
+      // element containing its <script> tag, so parallel loads can collide.
+      function loadGroup(i) {
+        if (i >= groups.length) return;
+        var section = groups[i];
+        var mount = section.querySelector('.youli-group-mount');
+        var s = document.createElement('script');
+        s.src = BASE + encodeURIComponent(section.dataset.youliTag);
+        s.onload = function () { watch(section, mount, Date.now()); loadGroup(i + 1); };
+        s.onerror = function () { section.style.display = 'none'; loadGroup(i + 1); };
+        mount.appendChild(s);
+      }
+
+      // Hide a group entirely if Youli renders no trip cards for its tag.
+      function watch(section, mount, started) {
+        if (mount.querySelector('.trip-card-wrapper')) return; // cards arrived
+        if (Date.now() - started > 8000) {
+          if (!mount.querySelector('.trip-card-wrapper')) section.style.display = 'none';
+          return;
+        }
+        setTimeout(function () { watch(section, mount, started); }, 400);
+      }
+
+      loadGroup(0);
+    })();
+  </script>
 
   <!-- CTA -->
   <section class="bg-ink text-cream py-28 md:py-36 relative overflow-hidden">
@@ -60,18 +102,8 @@ import { respSrcset, SIZES_FULL } from '../utils/resp';
       <p class="text-lg text-cream/80 max-w-xl mx-auto mb-10">
         Tell us where your curiosity lives and one of our travel specialists will shape an itinerary specifically for your group.
       </p>
-      <a href="/#contact" class="btn !bg-saffron hover:!bg-saffron-dark">Start a Conversation</a>
+      <a href="/plan" class="btn !bg-saffron hover:!bg-saffron-dark">Plan a Journey</a>
     </div>
   </section>
 </Base>
 
-<style is:global>
-  /* Make the Youli widget look at home — paint over whatever default styling it ships with where possible. */
-  .youli-embed {
-    min-height: 400px;
-  }
-  .youli-embed iframe,
-  .youli-embed > div {
-    max-width: 100%;
-  }
-</style>
